@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from "../api/axios";   // ✅ import your instance
+
 import { useParams } from 'react-router-dom';
 import "../assets/css/orderDetails.css";
 
@@ -9,7 +10,7 @@ function OrderDetails() {
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/orders/${id}/`, {
+    api.get(`http://localhost:8000/api/orders/${id}/`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
     .then(res => setOrder(res.data))

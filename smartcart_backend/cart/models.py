@@ -6,8 +6,8 @@ from django.conf import settings
 class Cart(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,  # ← use dynamic user model
-        on_delete=models.CASCADE
-    )
+        on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)   
 
 
 class CartItem(models.Model):

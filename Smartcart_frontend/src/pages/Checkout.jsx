@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from "../api/axios";
 import '../assets/css/checkout.css';
 
 function Checkout() {
@@ -7,7 +7,7 @@ function Checkout() {
   const [shippingAddress, setShippingAddress] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:8000/cart/my_cart/', {
+    api.get('http://localhost:8000/cart/my_cart/', {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
     .then(res => setCart(res.data))
@@ -17,7 +17,7 @@ function Checkout() {
   const cartTotal = cart.items.reduce((total, item) => total + item.product.price * item.quantity, 0);
 
   const placeOrder = () => {
-    axios.post('http://localhost:8000/orders/create_order/', 
+    api.post('http://localhost:8000/orders/create_order/', 
       { shipping_address: shippingAddress },
       { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
     )

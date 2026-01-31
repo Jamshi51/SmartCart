@@ -1,5 +1,6 @@
 import React from "react";
-import axios from "axios";
+import api from "../api/axios";   // ✅ import your instance
+
 import { useParams, useNavigate } from "react-router-dom";
 
 function Payment() {
@@ -8,7 +9,7 @@ function Payment() {
 
   const confirmPayment = async () => {
     try {
-      await axios.post(
+      await api.post(
         `http://localhost:8000/api/orders/payment-success/${orderId}/`,
         {},
         {
@@ -39,7 +40,7 @@ function Payment() {
   );
 }
 const confirmPayment = async () => {
-  await axios.post(
+  await api.post(
     `http://localhost:8000/api/orders/payment-success/${orderId}/`,
     {},
     { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from "../api/axios";   // ✅ import your instance
+
 import '../assets/css/profile.css';
 
 function Profile() {
@@ -13,7 +14,7 @@ function Profile() {
   }, []);
 
   const fetchProfile = () => {
-    axios.get('http://localhost:8000/api/users/profile/', {
+    api.get('http://localhost:8000/api/users/profile/', {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
     .then(res => {
@@ -24,7 +25,7 @@ function Profile() {
   };
 
   const updateProfile = () => {
-    axios.put('http://localhost:8000/api/users/profile/', 
+    api.put('http://localhost:8000/api/users/profile/', 
       { 
         first_name: user.first_name, 
         last_name: user.last_name,

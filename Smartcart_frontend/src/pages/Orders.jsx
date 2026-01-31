@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from "../api/axios";
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/orders.css';
 
@@ -9,7 +9,7 @@ function Orders() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/orders/my_orders/', {
+    api.get('http://localhost:8000/api/orders/my_orders/', {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
     .then(res => setOrders(res.data))

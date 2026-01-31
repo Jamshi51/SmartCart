@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from "../api/axios";
 import '../assets/css/cart.css'; // reuse your CSS or create cart-specific CSS
 
 function Cart() {
@@ -7,7 +7,7 @@ function Cart() {
 
   // Fetch cart items
   const fetchCart = () => {
-    axios.get('http://localhost:8000/cart/my_cart/', {
+    api.get('http://localhost:8000/cart/my_cart/', {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
     .then(res => setCart(res.data))
@@ -20,7 +20,7 @@ function Cart() {
 
   // Update quantity
   const updateQuantity = (productId, quantity) => {
-    axios.post('http://localhost:8000/cart/update_cart_item/', { product: productId, quantity }, {
+    api.post('http://localhost:8000/cart/update_cart_item/', { product: productId, quantity }, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
     .then(() => fetchCart())
@@ -29,7 +29,7 @@ function Cart() {
 
   // Remove item
   const removeItem = (productId) => {
-    axios.post('http://localhost:8000/cart/remove_from_cart/', { product: productId }, {
+    api.post('http://localhost:8000/cart/remove_from_cart/', { product: productId }, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
     .then(() => fetchCart())
