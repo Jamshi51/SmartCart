@@ -1,46 +1,39 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../api/AuthContext";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { registerUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+    password2: "",
+    role: "customer",
+  });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ Client-side validation
-    if (password !== password2) {
-      toast.error("❌ Passwords do not match");
-      return;
-    }
-
-    setLoading(true);
-
     const result = await registerUser(
-      username,
-      email,
-      password,
-      password2
+      form.username,
+      form.email,
+      form.password,
+      form.password2,
+      form.role
     );
 
-    setLoading(false);
-
-    if (result?.success) {
-      toast.success("🎉 Registration successful!");
-      navigate("/login"); // redirect to login
+    if (result.success) {
+      alert("Registration successful");
+      navigate("/login");
     } else {
-      toast.error(
-        result?.error?.detail ||
-        "❌ Registration failed"
-      );
+      alert(JSON.stringify(result.error));
     }
   };
 
@@ -49,40 +42,50 @@ const Register = () => {
       <h2>Register</h2>
 
       <input
-        type="text"
+        name="username"
+        value={form.username}
+        onChange={handleChange}
         placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
         required
       />
 
       <input
+        name="email"
         type="email"
+        value={form.email}
+        onChange={handleChange}
         placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
         required
       />
 
       <input
         type="password"
+        name="password"
+        value={form.password}
+        onChange={handleChange}
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
         required
       />
 
       <input
         type="password"
+        name="password2"
+        value={form.password2}
+        onChange={handleChange}
         placeholder="Confirm Password"
-        value={password2}
-        onChange={(e) => setPassword2(e.target.value)}
         required
       />
 
-      <button type="submit" disabled={loading}>
-        {loading ? "Registering..." : "Register"}
-      </button>
+      <select
+        name="role"
+        value={form.role}
+        onChange={handleChange}
+      >
+        <option value="customer">Register as Customer</option>
+        <option value="seller">Register as Seller</option>
+      </select>
+
+      <button type="submit">Register</button>
     </form>
   );
 };

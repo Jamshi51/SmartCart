@@ -1,49 +1,40 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../api/AuthContext";
 
-import { useNavigate } from "react-router-dom";
+const Login = () => {
+  const { loginUser } = useContext(AuthContext);
 
-function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    axios.post("http://127.0.0.1:8000/api/login/", {
-      email,
-      password
-    })
-    .then(res => {
-      // ✅ Save token
-      localStorage.setItem("token", res.data.access);
-
-      alert("Login successful");
-      navigate("/products");
-    })
-    .catch(() => {
-      alert("Invalid credentials");
-    });
+    await loginUser(username, password);
   };
 
   return (
     <form onSubmit={handleLogin}>
       <h2>Login</h2>
+
       <input
-        type="email"
-        placeholder="Email"
-        onChange={e => setEmail(e.target.value)}
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
         required
       />
+
       <input
         type="password"
         placeholder="Password"
-        onChange={e => setPassword(e.target.value)}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         required
       />
+
       <button type="submit">Login</button>
     </form>
   );
-}
+};
 
 export default Login;

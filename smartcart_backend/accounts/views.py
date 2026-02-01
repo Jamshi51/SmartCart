@@ -18,8 +18,9 @@ class LoginSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-        # Add custom claims if needed
         token['username'] = user.username
+        token['role'] = user.role   # 👈 IMPORTANT
+
         return token
 
 class LoginView(TokenObtainPairView):

@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
-import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
+import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = createContext();
 
@@ -8,63 +9,58 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem("access_token")
-  );
 
-  // LOGIN
   const loginUser = async (username, password) => {
     try {
-      const response = await api.post("/api/login/", {
-        username,
-        password,
-      });
+      const res = await api.post("/api/login/", { username, password });
 
-      const { access, refresh } = response.data;
+      const access = res.data.access;
+      const decoded = jwtDecode(access);
 
       localStorage.setItem("access_token", access);
-      localStorage.setItem("refresh_token", refresh);
+      localStorage.setItem("username", decoded.username);
+      localStorage.setItem("role", decoded.role);
 
-      setAccessToken(access);
-      setUser({ username });
-
-      navigate("/");
-    } catch (err) {
-      console.error(err.response?.data);
-      alert("Login failed");
-    }
-  };
-
-  // REGISTER
-  const registerUser = async (username, email, password, password2) => {
-    try {
-      const response = await api.post("/api/register/", {
-        username,
-        email,
-        password,
-        password2,
+      setUser({
+        username: decoded.username,
+        role: decoded.role,
       });
 
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error(error.response?.data);
-      return { success: false, error: error.response?.data };
+      // 🔁 ROLE BASED REDIRECT
+      if (decoded.role === "seller") navigate("/seller");
+      else navigate("/"); // customer
+
+    } catch {
+      alert("Invalid credentials");
     }
   };
+ const registerUser = async (username, email, password, password2, role) => {
+  try {
+    const response = await api.post("/api/register/", {
+      username,
+      email,
+      password,
+      password2,
+      role,
+    });
 
-  // LOGOUT
+    return { success: true, data: response.data };
+
+  } catch (err) {
+    console.error(err.response?.data); // 👈 CRITICAL LINE
+    return { success: false, error: err.response?.data };
+  }
+};
+
+ 
   const logoutUser = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+    localStorage.clear();
     setUser(null);
-    setAccessToken(null);
     navigate("/login");
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, loginUser, registerUser, logoutUser }}
-    >
+    <AuthContext.Provider value={{ user, loginUser, registerUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );
