@@ -8,28 +8,35 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 const Home = () => {
+  const role = localStorage.getItem("role");
+
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Ref for SHOP NOW button
   const shopNowRef = useRef(null);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
+useEffect(() => {
+  const fetchProducts = async () => {
+    if (role === "customer") {  // only customers fetch products
       try {
-        const response = await api.get("/api/products/");
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Failed to fetch products", error);
+        const res = await api.get("/api/products/");
+        setProducts(res.data);
+      } catch (err) {
+        console.error("Failed to fetch products", err.response?.data);
       } finally {
         setLoading(false);
       }
-    };
+    } else {
+      setLoading(false); // sellers & guests skip products
+    }
+  };
 
-    fetchProducts();
-  }, []);
+  fetchProducts();
+}, [role]);
+
 
   const handleExploreMore = () => {
     // Scroll smoothly to SHOP NOW button

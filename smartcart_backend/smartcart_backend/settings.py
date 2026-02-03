@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-iqcj3d^ehtv3ok(6o&b9(mvoc6!svumn^yuh_95xm!@3-g7f_p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'accounts.User'
 CORS_ALLOW_CREDENTIALS = True
 
@@ -42,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-   
+    'rest_framework_simplejwt',
     'rest_framework',
     'accounts',
     'cart',
@@ -63,12 +64,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'smartcart_backend.urls'
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:8000",
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
-
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
 
 TEMPLATES = [
     {
@@ -143,9 +144,12 @@ MEDIA_URL="media/"
 MEDIA_ROOT=os.path.join(BASE_DIR,"media")
 
 REST_FRAMEWORK = {
-
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    ],
 }
+
 

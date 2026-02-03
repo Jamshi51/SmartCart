@@ -1,80 +1,93 @@
-/* NAVBAR */
+/* NAVBAR CONTAINER */
 .navbar {
+  height: 70px;
+  padding: 0 40px;
+  background: linear-gradient(90deg, #0f172a, #020617);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 60px;
-  background: linear-gradient(90deg, #000, #1a1a1a);
-  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 /* LOGO */
-.logo {
-  font-size: 26px;
-  font-weight: bold;
-  color: orange;
+.navbar > a {
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #f97316;
+  letter-spacing: 1px;
 }
-.nav-search {
-  display: flex;
-}
-/* SEARCH BAR + CATEGORY */
-.nav-search {
+
+/* LINKS CONTAINER */
+.nav-links {
   display: flex;
   align-items: center;
-  background: #fff;
-  border-radius: 6px;
-  overflow: hidden;
-  width: 420px;
-}
-
-/* CATEGORY DROPDOWN */
-.nav-search select {
-  padding: 10px;
-  border: none;
-  outline: none;
-  background: #f2f2f2;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-/* SEARCH INPUT */
-.nav-search input {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  outline: none;
-  font-size: 14px;
-}
-
-/* SEARCH BUTTON */
-.nav-search button {
-  padding: 10px 14px;
-  background: orange;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-
-
-/* NAV LINKS */
-.nav-links {
-  list-style: none;
-  display: flex;
   gap: 22px;
 }
 
-.nav-links li a {
-  color: white;
+/* NAV LINKS */
+.nav-links a {
+  color: #e5e7eb;
   text-decoration: none;
+  font-size: 15px;
   font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
-.nav-links li a:hover {
-  color: orange;
+/* HOVER UNDERLINE */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background-color: #f97316;
+  transition: width 0.3s ease;
 }
 
-/* CART */
-.cart {
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a:hover {
+  color: #f97316;
+}
+
+/* LOGOUT BUTTON */
+.nav-links button {
+  background-color: #f97316;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
+
+.nav-links button:hover {
+  background-color: #ea580c;
+  transform: scale(1.05);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .nav-links {
+    gap: 14px;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+  }
+}
+
+

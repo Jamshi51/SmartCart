@@ -1,43 +1,50 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../api/AuthContext";
+import "../assets/css/navbar.css";
 
 const Navbar = () => {
-  const { user, logoutUser } = useContext(AuthContext);
+  const { logoutUser, user } = useContext(AuthContext);
 
-  const role = user?.role;   // safer than localStorage directly
+  const token = localStorage.getItem("access_token");
 
   return (
-    <nav style={styles.nav}>
-      <h3>SmartCart</h3>
+    <nav className="navbar">
+      {/* LEFT SIDE */}
+      <Link to="/">SmartCart</Link>
 
-      <div style={styles.links}>
-        {/* 🔓 Public */}
-        {!user && <Link to="/login">Login</Link>}
-        {!user && <Link to="/register">Register</Link>}
+      {/* RIGHT SIDE */}
+      <div className="nav-links">
 
-       
-
-        {/* 🧑‍💼 SELLER */}
-        {role === "seller" && (
+        {/* 🔓 NOT LOGGED IN */}
+        {!token && (
           <>
-            <Link to="/seller">Seller Dashboard</Link>
-            <Link to="/seller/products">My Products</Link>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
           </>
         )}
 
-        {/* 🛒 CUSTOMER */}
-        {role === "customer" && (
+        {/* 🔐 LOGGED IN */}
+        {token && (
           <>
-            <Link to="/products">Shop</Link>
+            {/* CUSTOMER */}
+           {user && user.role === "customer" && (
+          <>
+            <Link to="/products">Products</Link>
             <Link to="/cart">Cart</Link>
-            <Link to="/orders">Orders</Link>
+            <Link to="/profile">Profile</Link>
+          </>
+           )}
+
+            {/* SELLER */}
+            {user?.role === "seller" && (
+              <Link to="/seller">Seller Dashboard</Link>
+            )}
+
+            <button onClick={logoutUser}>Logout</button>
           </>
         )}
 
-
-
-       
       </div>
     </nav>
   );
@@ -45,24 +52,3 @@ const Navbar = () => {
 
 export default Navbar;
 
-const styles = {
-  nav: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "15px",
-    background: "#111",
-    color: "#fff",
-  },
-  links: {
-    display: "flex",
-    gap: "15px",
-    alignItems: "center",
-  },
-  logout: {
-    background: "red",
-    color: "white",
-    border: "none",
-    padding: "5px 10px",
-    cursor: "pointer",
-  },
-};

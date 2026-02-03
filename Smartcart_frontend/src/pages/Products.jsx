@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import "../assets/css/products.css";
 import { toast } from "react-toastify";
-import api from "../api/axios";   // ✅ import your instance
+import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import publicApi from "../api/publicAxios";
 
 
 
 function Products() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
@@ -14,57 +17,35 @@ function Products() {
   const [maxPrice, setMaxPrice] = useState("");
 
   useEffect(() => {
-    fetchProducts();
-  }, [search, category, minPrice, maxPrice]);
+  fetchProducts();
+}, [search, category, minPrice, maxPrice]);
 
-  useEffect(() => {
-    // Fetch categories dynamically
-    api.get("http://127.0.0.1:8000/api/products/categories/")
-      .then(res => setCategories(res.data))
-      .catch(err => console.log(err));
-  }, []);
-
-  const fetchProducts = () => {
-    api.get("http://127.0.0.1:8000/api/products/", {
-      params: {
-        search: search || undefined,
-        category: category || undefined,
-        min_price: minPrice || undefined,
-        max_price: maxPrice || undefined,
-      }
-    })
-    .then(res => setProducts(res.data))
+useEffect(() => {
+  publicApi.get("products/categories/")
+    .then(res => setCategories(res.data))
     .catch(err => console.log(err));
-  };
+}, []);
 
-  const addToCart = (productId, stock) => {
-
-  if (!localStorage.getItem("token")) {
-    toast.warning("🔐 Please login to add items to cart");
-    return;
+const fetchProducts = async () => {
+  try {
+    const res = await publicApi.get("products/");
+    setProducts(res.data);
+  } catch (err) {
+    console.error("Failed to fetch products", err);
   }
-
-  if (stock <= 0) {
-    toast.error("❌ Out of stock");
-    return;
-  }
-
-  api.post(
-    "http://127.0.0.1:8000/api/cart/add_item/",
-    { product: productId },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    }
-  )
-  .then(() => {
-    toast.success("🛒 Product added to cart!");
-  })
-  .catch(() => {
-    toast.error("❌ Failed to add product");
-  });
 };
+
+const fetchCategories = async () => {
+  try {
+    const res = await publicApi.get("products/categories/");
+    setCategories(res.data);
+  } catch (err) {
+    console.error("Failed to fetch categories", err);
+  }
+};
+
+
+  
 
   return (
     <div className="products-page">
@@ -111,13 +92,9 @@ function Products() {
             <p>₹{product.price}</p>
             <p>{product.description}</p>
             <p>Stock: {product.stock}</p>
-            <button
-                  className="add-to-cart-btn"
-                  onClick={() => addToCart(product.id, product.stock)}
-                  disabled={product.stock === 0} >
-                  {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
-                </button>
-
+            <Link to={`/product/${product.slug}`} className="product-card-btn">
+              VIEW DETAIL
+            </Link>
              
           </div>
         ))}

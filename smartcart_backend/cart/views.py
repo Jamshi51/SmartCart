@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .models import Cart, CartItem
 from .serializers import CartSerializer, CartItemSerializer
 from products.models import Product
+from rest_framework import status
 
 # GET: fetch user cart
 @api_view(['GET'])
@@ -25,16 +26,25 @@ def add_to_cart(request):
     cart, _ = Cart.objects.get_or_create(user=user)
     product = Product.objects.get(id=product_id)
 
-    # Check if product already in cart
-    item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    item, created = CartItem.objects.get_or_create(
+        cart=cart,
+        product=product
+    )
+
     if not created:
         item.quantity += int(quantity)
     else:
         item.quantity = int(quantity)
+
     item.save()
 
-    return Response({'status': 'Product added to cart'})
-
+    return Response(
+        {
+            "success": True,
+            "message": "Product added to cart successfully"
+        },
+        status=status.HTTP_200_OK
+    )
 # POST: remove product from cart
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
