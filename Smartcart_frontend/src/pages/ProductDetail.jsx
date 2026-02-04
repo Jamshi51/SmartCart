@@ -18,20 +18,18 @@ function ProductDetail() {
       .catch(() => toast.error("Failed to load product"));
   }, [slug]);                            // ✅ slug dependency
 
-  const addToCart = async () => {
+ const addToCart = async () => {
   try {
     await api.post("cart/add_to_cart/", {
       product: product.id,
       quantity: 1,
     });
 
-    toast.success("Product added to cart successfully 🛒");
+    alert("Product added to cart successfully");
   } catch (err) {
-    console.error(err);
-    toast.error("Something went wrong while adding to cart");
+    alert("Failed to add product");
   }
 };
-
   const buyNow = async () => {
     await addToCart();
     navigate("/checkout");

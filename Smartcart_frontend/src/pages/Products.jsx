@@ -21,14 +21,14 @@ function Products() {
 }, [search, category, minPrice, maxPrice]);
 
 useEffect(() => {
-  publicApi.get("products/categories/")
+  publicApi.get("/products/categories/")
     .then(res => setCategories(res.data))
     .catch(err => console.log(err));
 }, []);
 
 const fetchProducts = async () => {
   try {
-    const res = await publicApi.get("products/");
+    const res = await publicApi.get("/products/");
     setProducts(res.data);
   } catch (err) {
     console.error("Failed to fetch products", err);
@@ -37,7 +37,7 @@ const fetchProducts = async () => {
 
 const fetchCategories = async () => {
   try {
-    const res = await publicApi.get("products/categories/");
+    const res = await publicApi.get("/products/categories/");
     setCategories(res.data);
   } catch (err) {
     console.error("Failed to fetch categories", err);
