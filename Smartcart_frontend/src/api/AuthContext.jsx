@@ -10,39 +10,67 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 🔁 RESTORE USER ON REFRESH
+  // 🔁 RESTORE USER SAFELY
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    const role = localStorage.getItem("role");
-    const username = localStorage.getItem("username");
+    const restoreUser = async () => {
+      const access = localStorage.getItem("access_token");
+      const refresh = localStorage.getItem("refresh_token");
 
-    if (token && role && username) {
-      setUser({ username, role });
-    }
+      if (!access || !refresh) {
+        setLoading(false);
+        return;
+      }
 
-    setLoading(false);
+      try {
+        const decoded = jwtDecode(access);
+        const now = Date.now() / 1000;
+
+        // ⏰ access token expired
+        if (decoded.exp < now) {
+          const res = await api.post("token/refresh/", {
+            refresh,
+          });
+
+          localStorage.setItem("access_token", res.data.access);
+
+          const newDecoded = jwtDecode(res.data.access);
+
+          setUser({
+            username: newDecoded.username,
+            role: newDecoded.role,
+          });
+        } else {
+          setUser({
+            username: decoded.username,
+            role: decoded.role,
+          });
+        }
+      } catch {
+        localStorage.clear();
+      }
+
+      setLoading(false);
+    };
+
+    restoreUser();
   }, []);
 
   // ✅ LOGIN
   const loginUser = async (username, password) => {
     try {
       const res = await api.post("login/", { username, password });
-      const access = res.data.access;
-      const decoded = jwtDecode(access);
 
       localStorage.setItem("access_token", res.data.access);
       localStorage.setItem("refresh_token", res.data.refresh);
-      localStorage.setItem("username", decoded.username);
-      localStorage.setItem("role", decoded.role);
+
+      const decoded = jwtDecode(res.data.access);
 
       setUser({
         username: decoded.username,
         role: decoded.role,
       });
 
-      if (decoded.role === "seller") navigate("/seller");
-      else navigate("/");
-
+      navigate(decoded.role === "seller" ? "/seller" : "/");
     } catch {
       alert("Invalid credentials");
     }

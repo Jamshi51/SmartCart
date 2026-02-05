@@ -16,18 +16,19 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductDetail from "./pages/ProductDetail";
+import Wishlist from "./pages/Wishlist";
 
 function App() {
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} theme="colored" />
-
+    
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
 
           <Route
-            path="/products"
+            path="/products/"
             element={
               <ProtectedRoute allowedRoles={["customer"]}>
                 <Products />
@@ -35,6 +36,14 @@ function App() {
             }
           />
          <Route path="/product/:slug" element={<ProductDetail />} />
+         <Route
+            path="/wishlist"
+            element={
+              <ProtectedRoute allowedRoles={["customer"]}>
+                <Wishlist />
+              </ProtectedRoute>
+            }
+          />
 
 
           <Route
@@ -95,6 +104,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
+
+    
     </>
   );
 }

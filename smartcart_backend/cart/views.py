@@ -6,6 +6,7 @@ from .models import Cart, CartItem
 from .serializers import CartSerializer, CartItemSerializer
 from products.models import Product
 from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 # GET: fetch user cart
 @api_view(['GET'])
@@ -15,49 +16,38 @@ def view_cart(request):
     serializer = CartSerializer(cart)
     return Response(serializer.data)
 
-# POST: add product to cart
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def add_to_cart(request):
     user = request.user
     product_id = request.data.get('product')
-    quantity = request.data.get('quantity', 1)
 
     cart, _ = Cart.objects.get_or_create(user=user)
     product = Product.objects.get(id=product_id)
 
     item, created = CartItem.objects.get_or_create(
         cart=cart,
-        product=product
+        product=product,
+        defaults={'quantity': 1}
     )
 
-    if not created:
-        item.quantity += int(quantity)
-    else:
-        item.quantity = int(quantity)
+    return Response({
+        "success": True,
+        "created": created,
+        "message": "Added to cart" if created else "Already in cart"
+    })
 
-    item.save()
 
-    return Response(
-        {
-            "success": True,
-            "message": "Product added to cart successfully"
-        },
-        status=status.HTTP_200_OK
-    )
-# POST: remove product from cart
-@api_view(['POST'])
+@api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def remove_from_cart(request):
-    cart, _ = Cart.objects.get_or_create(user=request.user)
-    product_id = request.data.get('product')
-
-    try:
-        item = CartItem.objects.get(cart=cart, product_id=product_id)
-        item.delete()
-        return Response({'status': 'Product removed from cart'})
-    except CartItem.DoesNotExist:
-        return Response({'status': 'Item not found in cart'}, status=404)
+def remove_from_cart(request, item_id):
+    item = get_object_or_404(
+        CartItem,
+        id=item_id,
+        cart__user=request.user
+    )
+    item.delete()
+    return Response({'message': 'Item removed from cart'}, status=200)
 
 # POST: update quantity
 @api_view(['POST'])

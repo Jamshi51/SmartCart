@@ -33,6 +33,17 @@ const Navbar = () => {
             <Link to="/products">Products</Link>
             <Link to="/cart">Cart</Link>
             <Link to="/profile">Profile</Link>
+            <Link
+                to="/wishlist"
+                style={{
+                  textDecoration: "none",
+                  color: "red",
+                  fontSize: "18px",
+                  fontWeight: "500",
+                }}
+              >
+                ❤️ 
+              </Link>
           </>
            )}
 
