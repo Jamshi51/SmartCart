@@ -22,8 +22,10 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    // 401 due to expired access token
     if (
       error.response?.status === 401 &&
+      error.response.data?.code === "token_not_valid" &&
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
@@ -32,6 +34,7 @@ api.interceptors.response.use(
         const refresh = localStorage.getItem("refresh_token");
         if (!refresh) throw new Error("No refresh token");
 
+        // call refresh endpoint
         const res = await axios.post(
           "http://127.0.0.1:8000/api/token/refresh/",
           { refresh }
@@ -42,8 +45,9 @@ api.interceptors.response.use(
         originalRequest.headers.Authorization =
           `Bearer ${res.data.access}`;
 
-        return api(originalRequest);
+        return api(originalRequest); // retry original request automatically
       } catch (err) {
+        // Only redirect if refresh token is invalid
         localStorage.clear();
         window.location.href = "/login";
         return Promise.reject(err);

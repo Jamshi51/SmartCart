@@ -15,11 +15,11 @@ function ProductDetail() {
   useEffect(() => {
     if (!slug) return;
 
-    publicApi.get(`products/${slug}/`)         // ✅ no /api here
+    publicApi.get(`products/${slug}/`)
       .then(res => setProduct(res.data))
       .catch(() => toast.error("Failed to load product"));
-  }, [slug]);  
-  
+  }, [slug]);
+
   
   useEffect(() => {
     api.get("cart/")

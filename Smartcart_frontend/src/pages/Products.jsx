@@ -92,7 +92,7 @@ const fetchCategories = async () => {
             <p>₹{product.price}</p>
             <p>{product.description}</p>
             <p>Stock: {product.stock}</p>
-            <Link to={`/product/${product.slug}`} className="product-card-btn">
+            <Link to={`/products/${product.slug}`} className="product-card-btn">
               VIEW DETAIL
             </Link>
              
