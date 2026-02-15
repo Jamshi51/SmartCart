@@ -9,7 +9,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Products from "./pages/Products";
 import Profile from "./pages/Profile";
-import Payment from "./pages/Payment";
+import Payment from "./pages/FakePayment";
 import SellerDashboard from "./pages/SellerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -83,6 +83,16 @@ function App() {
           />
 
           <Route
+            path="/payment-gateway"
+            element={
+              <ProtectedRoute allowedRoles={["customer", "seller", "admin"]}>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
+
+
+          <Route
             path="/seller"
             element={
               <ProtectedRoute allowedRoles={["seller"]}>
@@ -111,5 +121,4 @@ function App() {
 }
 
 export default App;
-
 

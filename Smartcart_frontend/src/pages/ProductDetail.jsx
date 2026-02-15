@@ -79,10 +79,10 @@ const toggleWishlist = async () => {
 };
   
 
-  const buyNow = async () => {
-    await addToCart();
-    navigate("/checkout");
-  };
+  const buyNow = () => {
+  navigate("/checkout", { state: { product } });
+};
+
   
 
   const addToWishlist = () => {

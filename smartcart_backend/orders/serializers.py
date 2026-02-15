@@ -1,14 +1,15 @@
 from rest_framework import serializers
-from .models import Order, OrderItem
+from .models import Order
+from products.models import Product
 
-class OrderItemSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OrderItem
-        fields = ['id', 'product', 'quantity', 'price']
+        model = Product
+        fields = ['id', 'name', 'image', 'price']
 
 class OrderSerializer(serializers.ModelSerializer):
-    items = OrderItemSerializer(many=True)
+    product = ProductSerializer()  # Nested serializer
 
     class Meta:
         model = Order
-        fields = ['id', 'user', 'created_at', 'status', 'total_price', 'shipping_address', 'items']
+        fields = ['id', 'product', 'total_amount', 'payment_method', 'shipping_address', 'created_at']

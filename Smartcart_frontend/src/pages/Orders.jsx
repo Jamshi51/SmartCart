@@ -1,43 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import api from "../api/axios";
-import { useNavigate } from 'react-router-dom';
-import '../assets/css/orders.css';
+import api from "../api/axios";   // ✅ import your instance
+
+import { useParams } from 'react-router-dom';
+import "../assets/css/orderDetails.css";
 
 
-function Orders() {
-  const [orders, setOrders] = useState([]);
-  const navigate = useNavigate();
+function OrderDetails() {
+  const { id } = useParams();
+  const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    api.get('http://localhost:8000/api/orders/my_orders/', {
+    api.get(`http://localhost:8000/api/orders/${id}/`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
-    .then(res => setOrders(res.data))
+    .then(res => setOrder(res.data))
     .catch(err => console.log(err));
-  }, []);
+  }, [id]);
+
+  if (!order) return <p>Loading...</p>;
 
   return (
-    <div className="orders-page">
-      <h1>My Orders</h1>
+    <div className="order-details">
+      <h1>Order Details</h1>
+      <p className="order-id">Order ID: #{order.id}</p>
+      <p>Status: {order.status}</p>
+      <p>Total: ₹{order.total_price}</p>
 
-      {orders.length === 0 ? (
-        <p>No orders found.</p>
-      ) : (
-        orders.map(order => (
-          <div key={order.id} className="order-card">
-            <p><b>Order ID:</b> {order.id}</p>
-            <p><b>Status:</b> {order.status}</p>
-            <p><b>Total:</b> ₹{order.total_price}</p>
-            <p><b>Date:</b> {new Date(order.created_at).toLocaleDateString()}</p>
-
-            <button onClick={() => navigate(`/orders/${order.id}`)}>
-              View Details
-            </button>
-          </div>
-        ))
-      )}
+      <h2>Items</h2>
+      {order.items.map(item => (
+        <div key={item.id} className="order-item">
+          <p>{item.product}</p>
+          <p>Quantity: {item.quantity}</p>
+          <p>Price: ₹{item.price}</p>
+        </div>
+      ))}
     </div>
   );
 }
 
-export default Orders;
+export default OrderDetails;

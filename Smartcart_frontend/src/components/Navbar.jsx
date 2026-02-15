@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext } from "../api/AuthContext";
+import  AuthContext  from "../api/AuthContext";
 import "../assets/css/navbar.css";
 
 const Navbar = () => {
@@ -17,7 +17,8 @@ const Navbar = () => {
       <div className="nav-links">
 
         {/* 🔓 NOT LOGGED IN */}
-        {!token && (
+     
+        {!user && (
           <>
             <Link to="/login">Login</Link>
             <Link to="/register">Register</Link>
@@ -25,30 +26,25 @@ const Navbar = () => {
         )}
 
         {/* 🔐 LOGGED IN */}
-        {token && (
+        {user && (
           <>
-            {/* CUSTOMER */}
-           {user && user.role === "customer" && (
-          <>
-            <Link to="/products">Products</Link>
-            <Link to="/cart">Cart</Link>
-            <Link to="/profile">Profile</Link>
-            <Link
-                to="/wishlist"
-                style={{
+            {user.role === "customer" && (
+              <>
+                <Link to="/products">Products</Link>
+                <Link to="/cart">Cart</Link>
+                <Link to="/profile">Profile</Link>
+                <Link to="/wishlist" style={{
                   textDecoration: "none",
                   color: "red",
                   fontSize: "18px",
                   fontWeight: "500",
-                }}
-              >
-                ❤️ 
-              </Link>
-          </>
-           )}
+                }}>
+                  ❤️
+                </Link>
+              </>
+            )}
 
-            {/* SELLER */}
-            {user?.role === "seller" && (
+            {user.role === "seller" && (
               <Link to="/seller">Seller Dashboard</Link>
             )}
 
@@ -56,10 +52,10 @@ const Navbar = () => {
           </>
         )}
 
+
       </div>
     </nav>
   );
 };
 
 export default Navbar;
-

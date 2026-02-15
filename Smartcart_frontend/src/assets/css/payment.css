@@ -1,0 +1,151 @@
+/* Background wrapper */
+.payment-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #4e73df, #1cc88a);
+  padding: 20px;
+}
+
+/* Main payment box */
+.payment-box {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Title */
+.payment-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Payment method buttons */
+.payment-methods {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.payment-methods button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #4e73df;
+  background: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: 500;
+}
+
+.payment-methods button:hover {
+  background: #f8f9fc;
+}
+
+.payment-methods .active {
+  background: #4e73df;
+  color: white;
+}
+
+/* Form */
+.payment-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.payment-form input:focus {
+  outline: none;
+  border-color: #4e73df;
+  box-shadow: 0 0 0 2px rgba(78, 115, 223, 0.2);
+}
+
+/* Row for expiry + CVV */
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+/* Pay button */
+.pay-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #1cc88a;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.pay-button:hover {
+  background: #17a673;
+}
+
+/* Success message */
+.success-message {
+  margin-top: 15px;
+  text-align: center;
+  color: #1cc88a;
+  font-weight: 600;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .payment-box {
+    padding: 20px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+}
+
+
+.success-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #28a745;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+  z-index: 1000;
+  animation: slideDown 0.4s ease-in-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

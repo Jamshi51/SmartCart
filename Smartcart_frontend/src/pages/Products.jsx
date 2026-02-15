@@ -51,36 +51,7 @@ const fetchCategories = async () => {
     <div className="products-page">
       <h1 className="products-heading">All Products</h1>
 
-      {/* 🔹 FILTER BAR */}
-      <div className="filter-bar">
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-
-        <select onChange={e => setCategory(e.target.value)}>
-          <option value="">All Categories</option>
-          {categories.map(cat => (
-            <option key={cat.id} value={cat.slug}>{cat.name}</option>
-          ))}
-        </select>
-
-        <input
-          type="number"
-          placeholder="Min ₹"
-          value={minPrice}
-          onChange={e => setMinPrice(e.target.value)}
-        />
-
-        <input
-          type="number"
-          placeholder="Max ₹"
-          value={maxPrice}
-          onChange={e => setMaxPrice(e.target.value)}
-        />
-      </div>
+     
 
       {/* 🔹 PRODUCT GRID */}
       <div className="product-grid">

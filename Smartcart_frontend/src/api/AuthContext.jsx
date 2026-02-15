@@ -1,91 +1,84 @@
 import { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-export const AuthContext = createContext();
+
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 🔁 RESTORE USER SAFELY
+  // ✅ RESTORE USER ON PAGE REFRESH
   useEffect(() => {
-    const restoreUser = async () => {
-      const access = localStorage.getItem("access_token");
-      const refresh = localStorage.getItem("refresh_token");
+    const token = localStorage.getItem("access_token");
 
-      if (!access || !refresh) {
-        setLoading(false);
-        return;
-      }
-
+    if (token) {
       try {
-        const decoded = jwtDecode(access);
-        const now = Date.now() / 1000;
-
-        // ⏰ access token expired
-        if (decoded.exp < now) {
-          const res = await api.post("token/refresh/", {
-            refresh,
-          });
-
-          localStorage.setItem("access_token", res.data.access);
-
-          const newDecoded = jwtDecode(res.data.access);
-
-          setUser({
-            username: newDecoded.username,
-            role: newDecoded.role,
-          });
-        } else {
-          setUser({
-            username: decoded.username,
-            role: decoded.role,
-          });
-        }
-      } catch {
+        const decoded = jwtDecode(token); // ✅ Use jwt_decode here
+        setUser({
+          user_id: decoded.user_id,
+          role: decoded.role || "customer", // fallback if role missing
+        });
+      } catch (error) {
         localStorage.clear();
+        setUser(null);
       }
+    }
 
-      setLoading(false);
-    };
-
-    restoreUser();
+    setLoading(false);
   }, []);
 
-  // ✅ LOGIN
+  // ✅ LOGIN FUNCTION
   const loginUser = async (username, password) => {
-    try {
-      const res = await api.post("login/", { username, password });
+  try {
+    const res = await api.post("login/", { username, password });
 
-      localStorage.setItem("access_token", res.data.access);
-      localStorage.setItem("refresh_token", res.data.refresh);
+    localStorage.setItem("access_token", res.data.access);
+    localStorage.setItem("refresh_token", res.data.refresh);
 
-      const decoded = jwtDecode(res.data.access);
+    const decoded = jwtDecode(res.data.access); // decode once
 
-      setUser({
-        username: decoded.username,
-        role: decoded.role,
-      });
+    setUser({
+      user_id: decoded.user_id,
+      role: decoded.role || "customer", // must exist
+    });
 
-      navigate(decoded.role === "seller" ? "/seller" : "/");
-    } catch {
-      alert("Invalid credentials");
-    }
-  };
+    navigate("/");
+  } catch (error) {
+    console.error("Login error:", error.response?.data);
+    alert(JSON.stringify(error.response?.data));
+  }
+};
 
-  // 🚪 LOGOUT
+
+  // ✅ LOGOUT FUNCTION
   const logoutUser = () => {
     localStorage.clear();
     setUser(null);
     navigate("/login");
   };
 
+  // ✅ REGISTER FUNCTION
+  const registerUser = async (formData) => {
+    try {
+      await api.post("register/", formData);
+      alert("Registration successful");
+      navigate("/login");
+    } catch (error) {
+      console.error(error.response?.data);
+      alert(JSON.stringify(error.response?.data));
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loginUser, logoutUser, loading }}>
+    <AuthContext.Provider value={{ user, registerUser, loginUser, logoutUser }}>
       {!loading && children}
     </AuthContext.Provider>
   );
 };
+
+export default AuthContext;

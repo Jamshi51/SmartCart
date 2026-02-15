@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 import api from "../api/axios"; // Axios instance
 import "../assets/css/home.css";
 import { useNavigate } from "react-router-dom";
@@ -135,5 +135,4 @@ useEffect(() => {
 };
 
 export default Home;
-
 

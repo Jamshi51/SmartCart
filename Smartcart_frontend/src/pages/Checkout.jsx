@@ -1,68 +1,141 @@
-import React, { useEffect, useState } from 'react';
+import { useLocation,useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import api from "../api/axios";
-import '../assets/css/checkout.css';
+import "../assets/css/checkout.css";
+import { toast } from "react-toastify";
+
 
 function Checkout() {
-  const [cart, setCart] = useState({ items: [] });
-  const [shippingAddress, setShippingAddress] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const product = location.state?.product;
+
+  const [profile, setProfile] = useState({});
+  const [paymentMethod, setPaymentMethod] = useState("COD");
 
   useEffect(() => {
-    api.get('http://localhost:8000/cart/my_cart/', {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    })
-    .then(res => setCart(res.data))
-    .catch(err => console.log(err));
+    api.get("profile/").then(res => {
+      const data = res.data;
+      setProfile({
+        name: data.full_name,
+        shipping_address: `${data.address_line}, ${data.city}, ${data.state} - ${data.postal_code}`
+      });
+    });
   }, []);
 
-  const cartTotal = cart.items.reduce((total, item) => total + item.product.price * item.quantity, 0);
+ 
 
-  const placeOrder = () => {
-    api.post('http://localhost:8000/orders/create_order/', 
-      { shipping_address: shippingAddress },
-      { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
-    )
-    .then(res => {
-      alert(`Order placed! Order ID: ${res.data.order_id}`);
-      setCart({ items: [] }); // clear frontend cart
-    })
-    .catch(err => console.log(err));
-  };
+const handlePlaceOrder = async () => {
+  try {
+    // Save order first
+    await api.post("orders/create/", {
+      product: product.id,
+      payment_method: paymentMethod,
+      total_amount: product.price,
+      shipping_address: profile.shipping_address
+    });
+
+    if (paymentMethod === "ONLINE") {
+      navigate("/payment-gateway");
+    } else {
+      navigate("/profile"); // COD
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+  if (!product) return <p>No product selected</p>;
 
   return (
-    <div className="checkout-page">
-      <h1>Checkout</h1>
+    <div className="checkout-container">
 
-      {cart.items.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <>
-          <div className="cart-summary">
-            {cart.items.map(item => (
-              <div key={item.id} className="cart-item">
-                <img src={`http://localhost:8000${item.product.image}`} alt={item.product.name} />
-                <h2>{item.product.name}</h2>
-                <p>Quantity: {item.quantity}</p>
-                <p>Total: ${item.product.price * item.quantity}</p>
+      {/* LEFT SIDE FORM */}
+      <div className="checkout-left">
+
+        <h2>Shipping Details</h2>
+
+        <input
+          type="text"
+          value={profile.name || ""}
+          readOnly
+          
+        />
+
+        <textarea
+          value={profile.shipping_address || ""}
+          readOnly
+        />
+
+       <div className="payment-section">
+          <h3>Select Payment Method</h3>
+
+          <label className="payment-card">
+            <input
+                type="radio"
+                name="payment"
+                value="COD"
+                checked={paymentMethod === "COD"}
+                onChange={() => setPaymentMethod("COD")}
+              />
+            <div className="payment-content">
+              <div className="payment-icon">💵</div>
+              <div>
+                <div className="payment-title">Cash on Delivery</div>
+                <div className="payment-sub">Pay when product is delivered</div>
               </div>
-            ))}
-            <h2>Cart Total: ${cartTotal}</h2>
-          </div>
+            </div>
+          </label>
 
-          <div className="shipping">
-            <h3>Shipping Address</h3>
-            <textarea 
-              value={shippingAddress} 
-              onChange={(e) => setShippingAddress(e.target.value)} 
-              placeholder="Enter your shipping address"
+          <label className="payment-card">
+             <input
+              type="radio"
+              name="payment"
+              value="ONLINE"
+              checked={paymentMethod === "ONLINE"}
+              onChange={() => setPaymentMethod("ONLINE")}
             />
+            <div className="payment-content">
+              <div className="payment-icon">💳</div>
+              <div>
+                <div className="payment-title">Online Payment</div>
+                <div className="payment-sub">UPI, Card, Net Banking</div>
+              </div>
+            </div>
+          </label>
+        </div>
+
+
+
+        <div className="checkout-bottom">
+          <div className="bottom-total">
+            Total: ₹{product.price}
           </div>
 
-          <button onClick={placeOrder}>Place Order</button>
-        </>
-      )}
+          <button onClick={handlePlaceOrder}>
+            Place Order
+          </button>
+
+        </div>
+
+
+      </div>
+
+      {/* RIGHT SIDE PRODUCT CARD */}
+      <div className="checkout-right">
+
+        <div className="product-card">
+          <img src={product.image} alt={product.name} />
+          <h3>{product.name}</h3>
+          <p>₹{product.price}</p>
+          <p>{product.description}</p>
+        </div>
+
+      </div>
+
     </div>
   );
 }
 
 export default Checkout;
-

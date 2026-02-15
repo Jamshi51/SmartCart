@@ -1,88 +1,70 @@
-import { useState, useContext } from "react";
-import { AuthContext } from "../api/AuthContext";
+import { useContext, useState } from "react";
+import  AuthContext  from "../api/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { registerUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-    password2: "",
-    role: "customer",
-  });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [role, setRole] = useState("customer");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await registerUser(
-      form.username,
-      form.email,
-      form.password,
-      form.password2,
-      form.role
-    );
+    const success = await registerUser({
+      username,
+      email,
+      password,
+      password2,
+      role,
+    });
 
-    if (result.success) {
-      alert("Registration successful");
+    if (success) {
       navigate("/login");
-    } else {
-      alert(JSON.stringify(result.error));
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
-
       <input
-        name="username"
-        value={form.username}
-        onChange={handleChange}
         placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
         required
       />
 
       <input
-        name="email"
         type="email"
-        value={form.email}
-        onChange={handleChange}
         placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         required
       />
 
       <input
         type="password"
-        name="password"
-        value={form.password}
-        onChange={handleChange}
         placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         required
       />
 
       <input
         type="password"
-        name="password2"
-        value={form.password2}
-        onChange={handleChange}
         placeholder="Confirm Password"
+        value={password2}
+        onChange={(e) => setPassword2(e.target.value)}
         required
       />
 
-      <select
-        name="role"
-        value={form.role}
-        onChange={handleChange}
-      >
-        <option value="customer">Register as Customer</option>
-        <option value="seller">Register as Seller</option>
+      <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <option value="customer">Customer</option>
+        <option value="seller">Seller</option>
       </select>
 
       <button type="submit">Register</button>

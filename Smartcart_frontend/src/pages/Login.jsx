@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../api/AuthContext";
+import  AuthContext  from "../api/AuthContext";
 
 const Login = () => {
   const { loginUser } = useContext(AuthContext);
@@ -7,17 +7,14 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    await loginUser(username, password);
+    loginUser(username, password);
   };
 
   return (
     <form onSubmit={handleLogin}>
-      <h2>Login</h2>
-
       <input
-        type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
