@@ -16,6 +16,8 @@ def create_order(request):
 
     try:
         product = Product.objects.get(id=product_id)
+        quantity = int(request.data.get('quantity', 1))
+        total_amount = product.price * quantity 
     except Product.DoesNotExist:
         return Response({"error": "Product not found"}, status=404)
 
@@ -23,9 +25,10 @@ def create_order(request):
     user=request.user,
     product=product,
     name=name,
+    quantity=quantity,
     shipping_address=shipping_address,
     payment_method=payment_method,
-    total_amount=product.price
+    total_amount=total_amount
 )
 
     serializer = OrderSerializer(order)

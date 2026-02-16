@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import "../assets/css/cart.css";
 
 function Cart() {
   const [cart, setCart] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get("cart/")
@@ -13,38 +16,109 @@ function Cart() {
   const removeFromCart = async (itemId) => {
     await api.delete(`cart/remove/${itemId}/`);
 
-    // ✅ immediate UI update
     setCart(prev => ({
       ...prev,
       items: prev.items.filter(item => item.id !== itemId)
     }));
   };
 
-  if (!cart) return <p>Loading...</p>;
+  const updateQuantity = async (itemId, newQty) => {
+  if (newQty < 1) return;
+
+  await api.patch(`cart/update/${itemId}/`, {
+    quantity: newQty
+  });
+
+  const res = await api.get("cart/");
+  setCart(res.data);
+};
+
+
+  const calculateTotal = () => {
+    return cart.items.reduce(
+      (total, item) => total + item.product_price * item.quantity,
+      0
+    );
+  };
+
+  if (!cart) return <p className="loading">Loading...</p>;
 
   return (
-    <div>
-      <h2>My Cart</h2>
+    <div className="cart-wrapper">
+      <h2 className="cart-title">My Shopping Cart</h2>
 
-      {cart.items.length === 0 && <p>Your cart is empty</p>}
+      {cart.items.length === 0 ? (
+        <p className="empty-cart">Your cart is empty</p>
+      ) : (
+        <div className="cart-layout">
 
-      {cart.items.map(item => (
-        <div key={item.id} style={{ marginBottom: "20px" }}>
-          <img
-            src={`http://127.0.0.1:8000${item.product_image}`}
-            alt={item.product_name}
-            width="100"
-          />
+          {/* LEFT SIDE - ITEMS */}
+          <div className="cart-items">
+            {cart.items.map(item => (
+              <div key={item.id} className="cart-card">
+                <img
+                  src={`http://127.0.0.1:8000${item.product_image}`}
+                  alt={item.product_name}
+                  className="product-image"
+                />
 
-          <p><strong>{item.product_name}</strong></p>
-          <p>Price: ₹{item.product_price}</p>
-          <p>Qty: {item.quantity}</p>
+                <div className="product-info">
+  <h3>{item.product_name}</h3>
+  <p className="price">
+    Unit: ₹{item.product_price}
+  </p>
 
-          <button onClick={() => removeFromCart(item.id)}>
-            Remove
-          </button>
+  <p className="subtotal">
+    Subtotal: ₹{item.product_price * item.quantity}
+  </p>
+
+
+
+  <div className="quantity-box">
+    <button
+      onClick={() =>
+        updateQuantity(item.id, item.quantity - 1)
+      }
+    >
+      −
+    </button>
+
+    <span>{item.quantity}</span>
+
+    <button
+      onClick={() =>
+        updateQuantity(item.id, item.quantity + 1)
+      }
+    >
+      +
+    </button>
+  </div>
+
+  <div className="cart-buttons">
+    <button
+      className="remove-btn"
+      onClick={() => removeFromCart(item.id)}
+    >
+      Remove
+    </button>
+
+    <button
+      className="view-btn"
+      onClick={() => navigate(`/products/${item.product_slug}`)
+}
+    >
+      View Product
+    </button>
+  </div>
+</div>
+
+              </div>
+            ))}
+          </div>
+
+         
         </div>
-      ))}
+      )}
     </div>
   );
 }

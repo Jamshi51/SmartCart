@@ -1,9 +1,8 @@
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import "../assets/css/checkout.css";
 import { toast } from "react-toastify";
-
 
 function Checkout() {
   const location = useLocation();
@@ -12,6 +11,11 @@ function Checkout() {
 
   const [profile, setProfile] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("COD");
+  const [quantity, setQuantity] = useState(1);
+
+  // ✅ Calculate total dynamically
+  const totalPrice = product ? (product.price * quantity).toFixed(2) : 0;
+
 
   useEffect(() => {
     api.get("profile/").then(res => {
@@ -23,28 +27,28 @@ function Checkout() {
     });
   }, []);
 
- 
+  const handlePlaceOrder = async () => {
+    try {
+      await api.post("orders/create/", {
+        product: product.id,
+        quantity: quantity,
+        payment_method: paymentMethod,
+        shipping_address: profile.shipping_address
+      });
 
-const handlePlaceOrder = async () => {
-  try {
-    // Save order first
-    await api.post("orders/create/", {
-      product: product.id,
-      payment_method: paymentMethod,
-      total_amount: product.price,
-      shipping_address: profile.shipping_address
-    });
+      toast.success("Order placed successfully!");
 
-    if (paymentMethod === "ONLINE") {
-      navigate("/payment-gateway");
-    } else {
-      navigate("/profile"); // COD
+      if (paymentMethod === "ONLINE") {
+        navigate("/payment-gateway");
+      } else {
+        navigate("/profile");
+      }
+
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
     }
-
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
   if (!product) return <p>No product selected</p>;
 
@@ -60,7 +64,6 @@ const handlePlaceOrder = async () => {
           type="text"
           value={profile.name || ""}
           readOnly
-          
         />
 
         <textarea
@@ -68,17 +71,18 @@ const handlePlaceOrder = async () => {
           readOnly
         />
 
-       <div className="payment-section">
+        {/* PAYMENT SECTION */}
+        <div className="payment-section">
           <h3>Select Payment Method</h3>
 
           <label className="payment-card">
             <input
-                type="radio"
-                name="payment"
-                value="COD"
-                checked={paymentMethod === "COD"}
-                onChange={() => setPaymentMethod("COD")}
-              />
+              type="radio"
+              name="payment"
+              value="COD"
+              checked={paymentMethod === "COD"}
+              onChange={() => setPaymentMethod("COD")}
+            />
             <div className="payment-content">
               <div className="payment-icon">💵</div>
               <div>
@@ -89,7 +93,7 @@ const handlePlaceOrder = async () => {
           </label>
 
           <label className="payment-card">
-             <input
+            <input
               type="radio"
               name="payment"
               value="ONLINE"
@@ -106,19 +110,16 @@ const handlePlaceOrder = async () => {
           </label>
         </div>
 
-
-
+        {/* TOTAL SECTION */}
         <div className="checkout-bottom">
           <div className="bottom-total">
-            Total: ₹{product.price}
+            Total: ₹{totalPrice}
           </div>
 
           <button onClick={handlePlaceOrder}>
             Place Order
           </button>
-
         </div>
-
 
       </div>
 
@@ -128,7 +129,30 @@ const handlePlaceOrder = async () => {
         <div className="product-card">
           <img src={product.image} alt={product.name} />
           <h3>{product.name}</h3>
-          <p>₹{product.price}</p>
+
+          <p>Unit Price: ₹{product.price}</p>
+
+          {/* ✅ Quantity Controls */}
+          <div className="quantity-box">
+            <button
+              onClick={() => quantity > 1 && setQuantity(quantity - 1)}
+            >
+              −
+            </button>
+
+            <span>{quantity}</span>
+
+            <button
+              onClick={() => setQuantity(quantity + 1)}
+            >
+              +
+            </button>
+          </div>
+
+          <p className="product-total">
+            Subtotal: ₹{totalPrice}
+          </p>
+
           <p>{product.description}</p>
         </div>
 

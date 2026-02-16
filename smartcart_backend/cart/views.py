@@ -49,18 +49,19 @@ def remove_from_cart(request, item_id):
     item.delete()
     return Response({'message': 'Item removed from cart'}, status=200)
 
-# POST: update quantity
-@api_view(['POST'])
+@api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
-def update_cart_item(request):
-    cart, _ = Cart.objects.get_or_create(user=request.user)
-    product_id = request.data.get('product')
-    quantity = int(request.data.get('quantity', 1))
-
+def update_cart_item(request, item_id):
     try:
-        item = CartItem.objects.get(cart=cart, product_id=product_id)
+        item = CartItem.objects.get(id=item_id, cart__user=request.user)
+    except CartItem.DoesNotExist:
+        return Response({"error": "Item not found"}, status=404)
+
+    quantity = request.data.get("quantity")
+
+    if quantity and int(quantity) > 0:
         item.quantity = quantity
         item.save()
-        return Response({'status': 'Quantity updated'})
-    except CartItem.DoesNotExist:
-        return Response({'status': 'Item not found in cart'}, status=404)
+        return Response({"message": "Quantity updated"})
+    
+    return Response({"error": "Invalid quantity"}, status=400)

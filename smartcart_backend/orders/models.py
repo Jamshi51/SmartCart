@@ -17,6 +17,7 @@ class Order(models.Model):
 
     name = models.CharField(max_length=255, null=True, blank=True)
     shipping_address = models.TextField(null=True, blank=True)
+    quantity = models.IntegerField(default=1)
 
 
     payment_method = models.CharField(max_length=10, choices=PAYMENT_CHOICES)

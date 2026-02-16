@@ -114,8 +114,20 @@ const Profile = () => {
                 />
 
                 <h4>{order.product?.name || "Unnamed Product"}</h4>
-                <p>₹{order.total_amount}</p>
+
+                <p>Quantity: {order.quantity}</p>
+
+                <p>
+                  Unit Price: ₹{order.product?.price}
+                </p>
+
+                <p className="order-total">
+                  Total: ₹{Number(order.total_amount).toFixed(2)}
+
+                </p>
+
                 <p>Payment: {order.payment_method}</p>
+
                 <p>{new Date(order.created_at).toLocaleDateString()}</p>
                 <p>Shipping: {order.shipping_address}</p>
               </div>
