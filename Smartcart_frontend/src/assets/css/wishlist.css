@@ -1,0 +1,204 @@
+/* ============================================
+   WISHLIST.CSS - Wishlist Page
+   SmartCart E-Commerce
+   ============================================ */
+
+:root {
+  --bg-dark: #0a0f1e;
+  --bg-surface: #111827;
+  --accent-primary: #38bdc8;
+  --accent-glow: rgba(56, 189, 200, 0.35);
+  --text-primary: #f0f4f8;
+  --text-secondary: #94a3b8;
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --card-bg: rgba(17, 24, 39, 0.85);
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --heart-color: #ef4444;
+}
+
+/* --- Wishlist Container (the outermost div) --- */
+.wishlist-page,
+div:has(> h2:first-child) {
+  /* Targets the parent div containing the wishlist */
+}
+
+/* We target the Wishlist page's root div via structure */
+/* The component renders a <div> with <h2> and items */
+
+/* --- Page Wrapper --- */
+body .wishlist-wrapper,
+div:has(> h2) {
+  min-height: 100vh;
+  padding: 7rem 5% 4rem;
+  background:
+    radial-gradient(ellipse at 60% 10%, rgba(56, 189, 200, 0.03), transparent 50%),
+    var(--bg-dark);
+}
+
+/* --- Title (h2) --- */
+div > h2:first-child {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 2.5rem;
+  animation: fadeDown 0.6s var(--transition-smooth) both;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Empty State --- */
+div > h2 + p {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  padding: 3rem 0;
+}
+
+/* --- Wishlist Item Cards --- */
+div > h2 ~ div:has(> img) {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.4s var(--transition-smooth);
+  animation: slideUp 0.5s var(--transition-smooth) both;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+div > h2 ~ div:has(> img)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 0;
+  background: linear-gradient(180deg, var(--heart-color), var(--accent-primary));
+  transition: height 0.4s var(--transition-smooth);
+  border-radius: 0 3px 3px 0;
+}
+
+div > h2 ~ div:has(> img):hover::before {
+  height: 100%;
+}
+
+div > h2 ~ div:has(> img):hover {
+  border-color: rgba(56, 189, 200, 0.15);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+}
+
+/* Wishlist Item Image */
+div > h2 ~ div > img {
+  width: 120px !important;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+  transition: transform 0.4s var(--transition-smooth);
+}
+
+div > h2 ~ div:has(> img):hover > img {
+  transform: scale(1.05);
+}
+
+/* Item Name */
+div > h2 ~ div > p:first-of-type {
+  flex: 1;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Item Price */
+div > h2 ~ div > p:nth-of-type(2) {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+  white-space: nowrap;
+}
+
+/* View Product Button */
+div > h2 ~ div > button {
+  padding: 0.6rem 1.4rem;
+  background: transparent;
+  color: var(--accent-primary);
+  border: 2px solid var(--accent-primary);
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s var(--transition-smooth);
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+div > h2 ~ div > button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--transition-smooth);
+  z-index: 0;
+}
+
+div > h2 ~ div > button:hover {
+  color: #0a0f1e;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+div > h2 ~ div > button:hover::before {
+  transform: scaleX(1);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 700px) {
+  div > h2 ~ div:has(> img) {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  div > h2 ~ div > img {
+    width: 100% !important;
+    height: 180px;
+  }
+
+  div > h2 ~ div > button {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  div > h2 ~ div:has(> img)::before {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  div:has(> h2) {
+    padding: 5.5rem 3% 2rem;
+  }
+}

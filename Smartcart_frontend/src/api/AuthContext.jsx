@@ -37,22 +37,32 @@ export const AuthProvider = ({ children }) => {
   try {
     const res = await api.post("login/", { username, password });
 
+    console.log("Login response:", res.data); // 🔍 check backend response
+
     localStorage.setItem("access_token", res.data.access);
     localStorage.setItem("refresh_token", res.data.refresh);
 
-    const decoded = jwtDecode(res.data.access); // decode once
+    const decoded = jwtDecode(res.data.access);
 
-    setUser({
+    console.log("Decoded token:", decoded); // 🔍 VERY IMPORTANT
+
+    const loggedUser = {
       user_id: decoded.user_id,
-      role: decoded.role || "customer", // must exist
-    });
+      role: decoded.role || "customer",
+    };
 
-    navigate("/");
+    console.log("Final user object:", loggedUser); // 🔍
+
+    setUser(loggedUser);
+
+    return loggedUser;
+
   } catch (error) {
     console.error("Login error:", error.response?.data);
-    alert(JSON.stringify(error.response?.data));
+    return null;
   }
 };
+
 
 
   // ✅ LOGOUT FUNCTION
@@ -75,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, registerUser, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ user, setUser, registerUser, loginUser, logoutUser }}>
       {!loading && children}
     </AuthContext.Provider>
   );

@@ -23,15 +23,15 @@ function Cart() {
   };
 
   const updateQuantity = async (itemId, newQty) => {
-  if (newQty < 1) return;
+    if (newQty < 1) return;
 
-  await api.patch(`cart/update/${itemId}/`, {
-    quantity: newQty
-  });
+    await api.patch(`cart/update/${itemId}/`, {
+      quantity: newQty
+    });
 
-  const res = await api.get("cart/");
-  setCart(res.data);
-};
+    const res = await api.get("cart/");
+    setCart(res.data);
+  };
 
 
   const calculateTotal = () => {
@@ -63,60 +63,67 @@ function Cart() {
                 />
 
                 <div className="product-info">
-  <h3>{item.product_name}</h3>
-  <p className="price">
-    Unit: ₹{item.product_price}
-  </p>
+                  <h3>{item.product_name}</h3>
+                  <p className="price">
+                    Unit: ₹{item.product_price}
+                  </p>
 
-  <p className="subtotal">
-    Subtotal: ₹{item.product_price * item.quantity}
-  </p>
+                  <p className="subtotal">
+                    ₹{item.product_price * item.quantity}
+                  </p>
 
+                  <div className="cart-buttons" style={{ marginTop: "15px" }}>
+                    <button
+                      className="remove-btn"
+                      onClick={() => removeFromCart(item.id)}
+                    >
+                      Remove
+                    </button>
 
+                    <button
+                      className="view-btn"
+                      onClick={() => navigate(`/products/${item.product_slug}`)}
+                    >
+                      View
+                    </button>
+                  </div>
+                </div>
 
-  <div className="quantity-box">
-    <button
-      onClick={() =>
-        updateQuantity(item.id, item.quantity - 1)
-      }
-    >
-      −
-    </button>
-
-    <span>{item.quantity}</span>
-
-    <button
-      onClick={() =>
-        updateQuantity(item.id, item.quantity + 1)
-      }
-    >
-      +
-    </button>
-  </div>
-
-  <div className="cart-buttons">
-    <button
-      className="remove-btn"
-      onClick={() => removeFromCart(item.id)}
-    >
-      Remove
-    </button>
-
-    <button
-      className="view-btn"
-      onClick={() => navigate(`/products/${item.product_slug}`)
-}
-    >
-      View Product
-    </button>
-  </div>
-</div>
+                {/* QUANTITY ACTIONS */}
+                <div className="quantity-actions">
+                  <div className="quantity-box">
+                    <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>−</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                  </div>
+                </div>
 
               </div>
             ))}
           </div>
 
-         
+          {/* RIGHT SIDE SUMMARY */}
+          <div className="cart-summary">
+            <h2>Order Summary</h2>
+
+            <div className="summary-row">
+              <span>Items Total:</span>
+              <span>₹{calculateTotal()}</span>
+            </div>
+            <div className="summary-row">
+              <span>Shipping:</span>
+              <span>Free</span>
+            </div>
+
+            <div className="summary-total">
+              <span>Total:</span>
+              <span>₹{calculateTotal()}</span>
+            </div>
+
+            <button className="btn-primary checkout-btn" onClick={() => navigate("/products")}>/* Or Checkout */
+              Proceed to Checkout
+            </button>
+          </div>
         </div>
       )}
     </div>

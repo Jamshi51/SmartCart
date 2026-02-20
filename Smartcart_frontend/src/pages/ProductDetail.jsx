@@ -20,11 +20,11 @@ function ProductDetail() {
       .catch(() => toast.error("Failed to load product"));
   }, [slug]);
 
-  
+
   useEffect(() => {
     api.get("cart/")
       .then(res => setCart(res.data))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
 
@@ -40,50 +40,50 @@ function ProductDetail() {
   }, [product]);
 
 
- const addToCart = async () => {
-  try {
-    await api.post("cart/add_to_cart/", {
-      product: product.id,  
-    });
+  const addToCart = async () => {
+    try {
+      await api.post("cart/add_to_cart/", {
+        product: product.id,
+      });
 
 
-    setCart(prev => ({
-      ...prev,
-      items: prev?.items
-        ? [...prev.items, { product: product.id }]
-        : [{ product: product.id }]
-    }));
-    alert("Product added to cart successfully");
-  } catch (err) {
-    alert("Failed to add product");
-  }
-};
-   const isInCart = cart?.items?.some(
+      setCart(prev => ({
+        ...prev,
+        items: prev?.items
+          ? [...prev.items, { product: product.id }]
+          : [{ product: product.id }]
+      }));
+      alert("Product added to cart successfully");
+    } catch (err) {
+      alert("Failed to add product");
+    }
+  };
+  const isInCart = cart?.items?.some(
     item => item.product === product?.id
-   );
+  );
 
 
-  
-   // toggle wishlist
-const toggleWishlist = async () => {
-  try {
-    const res = await api.post("wishlist/toggle/", {
-      product: product.id,   // send product id in POST body
-    });
-    setLiked(res.data.liked);
-    toast.success(res.data.liked ? "Added to wishlist ❤️" : "Removed from wishlist 💔");
-  } catch (err) {
-    console.error(err);
-    toast.error("Failed to update wishlist");
-  }
-};
-  
+
+  // toggle wishlist
+  const toggleWishlist = async () => {
+    try {
+      const res = await api.post("wishlist/toggle/", {
+        product: product.id,   // send product id in POST body
+      });
+      setLiked(res.data.liked);
+      toast.success(res.data.liked ? "Added to wishlist ❤️" : "Removed from wishlist 💔");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update wishlist");
+    }
+  };
+
 
   const buyNow = () => {
-  navigate("/checkout", { state: { product } });
-};
+    navigate("/checkout", { state: { product } });
+  };
 
-  
+
 
   const addToWishlist = () => {
     toast.info("Wishlist feature coming soon ❤️");
@@ -141,7 +141,7 @@ const toggleWishlist = async () => {
             Buy Now
           </button>
 
-         
+
 
         </div>
       </div>

@@ -57,57 +57,84 @@ function Checkout() {
 
       {/* LEFT SIDE FORM */}
       <div className="checkout-left">
-
         <h2>Shipping Details</h2>
 
-        <input
-          type="text"
-          value={profile.name || ""}
-          readOnly
-        />
+        <div className="form-group">
+          <label>Full Name</label>
+          <input
+            type="text"
+            value={profile.name || ""}
+            readOnly
+          />
+        </div>
 
-        <textarea
-          value={profile.shipping_address || ""}
-          readOnly
-        />
+        <div className="form-group">
+          <label>Shipping Address</label>
+          <textarea
+            value={profile.shipping_address || ""}
+            readOnly
+          />
+        </div>
 
         {/* PAYMENT SECTION */}
         <div className="payment-section">
           <h3>Select Payment Method</h3>
 
-          <label className="payment-card">
-            <input
-              type="radio"
-              name="payment"
-              value="COD"
-              checked={paymentMethod === "COD"}
-              onChange={() => setPaymentMethod("COD")}
-            />
-            <div className="payment-content">
-              <div className="payment-icon">💵</div>
-              <div>
-                <div className="payment-title">Cash on Delivery</div>
-                <div className="payment-sub">Pay when product is delivered</div>
+          <div className="payment-grid">
+            <label className="payment-card">
+              <input
+                type="radio"
+                name="payment"
+                value="COD"
+                checked={paymentMethod === "COD"}
+                onChange={() => setPaymentMethod("COD")}
+              />
+              <div className="payment-content">
+                <div className="payment-icon">💵</div>
+                <div>
+                  <div className="payment-title">Cash on Delivery</div>
+                  <div className="payment-sub">Pay when delivered</div>
+                </div>
               </div>
-            </div>
-          </label>
+            </label>
 
-          <label className="payment-card">
-            <input
-              type="radio"
-              name="payment"
-              value="ONLINE"
-              checked={paymentMethod === "ONLINE"}
-              onChange={() => setPaymentMethod("ONLINE")}
-            />
-            <div className="payment-content">
-              <div className="payment-icon">💳</div>
-              <div>
-                <div className="payment-title">Online Payment</div>
-                <div className="payment-sub">UPI, Card, Net Banking</div>
+            <label className="payment-card">
+              <input
+                type="radio"
+                name="payment"
+                value="ONLINE"
+                checked={paymentMethod === "ONLINE"}
+                onChange={() => setPaymentMethod("ONLINE")}
+              />
+              <div className="payment-content">
+                <div className="payment-icon">💳</div>
+                <div>
+                  <div className="payment-title">Online Payment</div>
+                  <div className="payment-sub">UPI, Card, Net Banking</div>
+                </div>
               </div>
-            </div>
-          </label>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      {/* RIGHT SIDE PRODUCT CARD */}
+      <div className="checkout-right">
+        <img src={product.image} alt={product.name} />
+        <h3>{product.name}</h3>
+
+        <p>Unit Price: ₹{product.price}</p>
+
+        {/* Quantity Controls */}
+        <div className="quantity-box">
+          <button onClick={() => quantity > 1 && setQuantity(quantity - 1)}>
+            −
+          </button>
+          <span>{quantity}</span>
+          <button onClick={() => setQuantity(quantity + 1)}>
+            +
+          </button>
         </div>
 
         {/* TOTAL SECTION */}
@@ -116,44 +143,9 @@ function Checkout() {
             Total: ₹{totalPrice}
           </div>
 
-          <button onClick={handlePlaceOrder}>
+          <button className="btn-primary" onClick={handlePlaceOrder}>
             Place Order
           </button>
-        </div>
-
-      </div>
-
-      {/* RIGHT SIDE PRODUCT CARD */}
-      <div className="checkout-right">
-
-        <div className="product-card">
-          <img src={product.image} alt={product.name} />
-          <h3>{product.name}</h3>
-
-          <p>Unit Price: ₹{product.price}</p>
-
-          {/* ✅ Quantity Controls */}
-          <div className="quantity-box">
-            <button
-              onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-            >
-              −
-            </button>
-
-            <span>{quantity}</span>
-
-            <button
-              onClick={() => setQuantity(quantity + 1)}
-            >
-              +
-            </button>
-          </div>
-
-          <p className="product-total">
-            Subtotal: ₹{totalPrice}
-          </p>
-
-          <p>{product.description}</p>
         </div>
 
       </div>

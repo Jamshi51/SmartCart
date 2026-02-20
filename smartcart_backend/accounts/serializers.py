@@ -6,14 +6,22 @@ from django.contrib.auth.password_validation import validate_password
 User = get_user_model()
 
 
-# ✅ CUSTOM LOGIN SERIALIZER
 class LoginSerializer(TokenObtainPairSerializer):
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        data["role"] = self.user.role
+        data["username"] = self.user.username
+
+        return data
+
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
 
         token["role"] = user.role
-        token["username"] = user.username   # optional but useful
+        token["username"] = user.username
 
         return token
 

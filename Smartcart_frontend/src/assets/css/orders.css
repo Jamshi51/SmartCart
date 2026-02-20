@@ -1,63 +1,98 @@
 /* Orders Page */
 .orders-page {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Background Effects */
+body::before {
+  content: '';
+  position: fixed;
+  top: 15%;
+  right: 10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  filter: blur(120px);
+  z-index: -1;
+  pointer-events: none;
 }
 
 .orders-page h1 {
   text-align: center;
-  margin-bottom: 30px;
-  color: #333;
+  margin-bottom: 40px;
+  color: var(--text-primary);
+  font-size: 2.2rem;
 }
 
 /* Order Card */
 .order-card {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  padding: 25px 30px;
+  margin-bottom: 25px;
+  box-shadow: var(--glass-shadow);
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
 }
 
 .order-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .order-card p {
-  margin: 6px 0;
-  font-size: 15px;
-  color: #444;
+  margin: 8px 0;
+  font-size: 1rem;
+  color: var(--text-secondary);
 }
 
 /* Status highlight */
 .order-card p b {
-  color: #000;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 /* View Details Button */
 .order-card button {
-  margin-top: 12px;
-  padding: 10px 18px;
-  font-size: 14px;
-  border-radius: 6px;
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
-  background-color: #0d6efd;
+  background: var(--gradient-main);
   color: white;
-  transition: background-color 0.2s ease;
+  transition: all var(--transition-normal);
+  box-shadow: 0 4px 15px var(--accent-glow);
+  align-self: flex-start;
 }
 
 .order-card button:hover {
-  background-color: #0b5ed7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--accent-glow);
+}
+
+.order-card button:active {
+  transform: translateY(1px);
 }
 
 /* Empty message */
-.orders-page p {
+.orders-page>p {
   text-align: center;
-  color: #777;
-  font-size: 16px;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  padding: 40px;
+  background: var(--glass-bg);
+  border-radius: 20px;
+  border: 1px dashed var(--glass-border);
 }

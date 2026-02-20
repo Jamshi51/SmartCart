@@ -1,4 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "./api/AuthContext";
 import MainLayout from "./layout/MainLayout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -10,22 +12,35 @@ import Checkout from "./pages/Checkout";
 import Products from "./pages/Products";
 import Profile from "./pages/Profile";
 import Payment from "./pages/FakePayment";
-import SellerDashboard from "./pages/SellerDashboard";
+import SellerDashboard from "./pages/seller/SellerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductDetail from "./pages/ProductDetail";
 import Wishlist from "./pages/Wishlist";
+import SellerProfile from "./pages/seller/SellerProfile";
 
 function App() {
+  const { user } = useContext(AuthContext);
+
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} theme="colored" />
     
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              user?.role === "seller" ? (
+                <Navigate to="/seller-dashboard" />
+              )  : (
+                <Home />
+              )
+            }
+          />
+
 
           <Route
             path="/products/"
@@ -93,13 +108,23 @@ function App() {
 
 
           <Route
-            path="/seller"
+            path="/seller-dashboard"
             element={
               <ProtectedRoute allowedRoles={["seller"]}>
                 <SellerDashboard />
               </ProtectedRoute>
             }
           />
+
+           <Route
+            path="/seller/profile"
+            element={
+              <ProtectedRoute allowedRoles={["seller"]}>
+                <SellerProfile />
+              </ProtectedRoute>
+            }
+          />
+
 
           <Route
             path="/admin"

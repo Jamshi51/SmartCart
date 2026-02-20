@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'reviews',
     'wishlist',
     'users.apps.UsersConfig',
+    'sellers'
+
 
 ]
 
@@ -75,6 +77,8 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "AUTH_HEADER_TYPES": ("Bearer",),
+    'TOKEN_OBTAIN_SERIALIZER': 
+    'accounts.serializers.LoginSerializer'
 }
 
 TEMPLATES = [
@@ -150,6 +154,9 @@ MEDIA_URL="media/"
 MEDIA_ROOT=os.path.join(BASE_DIR,"media")
 
 REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 8,
+    
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import "../assets/css/wishlist.css";
 
 function Wishlist() {
   const [items, setItems] = useState([]);
