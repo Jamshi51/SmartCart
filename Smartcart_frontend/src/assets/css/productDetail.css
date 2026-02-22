@@ -1,33 +1,28 @@
 /* ============================================
-   PRODUCT DETAIL CSS - Product Detail Page
+   PRODUCT DETAIL - Nude Theme
    SmartCart E-Commerce
    ============================================ */
 
-:root {
-  --bg-dark: #0a0f1e;
-  --bg-surface: #111827;
-  --accent-primary: #38bdc8;
-  --accent-glow: rgba(56, 189, 200, 0.35);
-  --text-primary: #f0f4f8;
-  --text-secondary: #94a3b8;
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --card-bg: rgba(17, 24, 39, 0.85);
-  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --danger: #ef4444;
-  --success: #4ade80;
-  --warning: #fbbf24;
-}
-
-/* --- Main Layout --- */
 .product-detail {
   display: flex;
   gap: 3.5rem;
   min-height: 100vh;
   padding: 7rem 6% 4rem;
-  background:
-    radial-gradient(ellipse at 80% 20%, rgba(56, 189, 200, 0.04), transparent 50%),
-    var(--bg-dark);
+  background: var(--bg-color-main);
+  position: relative;
   animation: pageFadeIn 0.6s var(--transition-smooth) both;
+}
+
+.product-detail::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  width: min(400px, 50vw);
+  height: min(400px, 50vw);
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+  filter: blur(80px);
+  pointer-events: none;
 }
 
 @keyframes pageFadeIn {
@@ -43,8 +38,9 @@
   position: relative;
   border-radius: 20px;
   overflow: hidden;
-  background: var(--card-bg);
+  background: var(--glass-bg);
   border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   align-self: flex-start;
   animation: slideInLeft 0.7s var(--transition-smooth) both;
 }
@@ -78,7 +74,7 @@
   justify-content: center;
   font-size: 1.5rem;
   color: var(--text-secondary);
-  background: rgba(10, 15, 30, 0.65);
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border);
@@ -91,14 +87,14 @@
 
 .wishlist-icon:hover {
   transform: scale(1.15);
-  background: rgba(10, 15, 30, 0.85);
+  background: var(--accent-subtle);
 }
 
 .wishlist-icon.active {
-  color: var(--danger);
+  color: var(--error);
   animation: heartBeat 0.5s ease-in-out;
-  background: rgba(239, 68, 68, 0.12);
-  border-color: rgba(239, 68, 68, 0.25);
+  background: rgba(193, 123, 123, 0.15);
+  border-color: rgba(193, 123, 123, 0.35);
 }
 
 @keyframes heartBeat {
@@ -139,9 +135,9 @@
   color: var(--accent-primary);
   font-weight: 600;
   padding: 0.3rem 0.9rem;
-  border: 1px solid rgba(56, 189, 200, 0.25);
+  border: 1px solid var(--accent-primary);
   border-radius: 50px;
-  background: rgba(56, 189, 200, 0.06);
+  background: var(--accent-subtle);
   width: fit-content;
 }
 
@@ -218,7 +214,7 @@
 }
 
 .cart-btn:hover {
-  color: #0a0f1e;
+  color: #fff;
   box-shadow: 0 0 25px var(--accent-glow);
 }
 
@@ -228,8 +224,9 @@
 
 /* Buy Now */
 .buy-btn {
-  background: var(--accent-primary);
-  color: #0a0f1e;
+  background: var(--gradient-main);
+  color: #fff;
+  box-shadow: 0 4px 16px var(--accent-glow);
 }
 
 .buy-btn::before {

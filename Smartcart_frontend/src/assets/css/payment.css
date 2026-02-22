@@ -1,25 +1,8 @@
 /* ============================================
-   PAYMENT.CSS - Fake Payment Page
+   PAYMENT - Nude Theme
    SmartCart E-Commerce
    ============================================ */
 
-:root {
-  --bg-dark: #0a0f1e;
-  --bg-surface: #111827;
-  --accent-primary: #38bdc8;
-  --accent-glow: rgba(56, 189, 200, 0.35);
-  --text-primary: #f0f4f8;
-  --text-secondary: #94a3b8;
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --card-bg: rgba(17, 24, 39, 0.85);
-  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --success: #4ade80;
-  --success-glow: rgba(74, 222, 128, 0.25);
-}
-
-/* ============================================
-   WRAPPER - Full Page
-   ============================================ */
 .payment-wrapper {
   min-height: 100vh;
   display: flex;
@@ -28,22 +11,19 @@
   padding: 6rem 5% 4rem;
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 25% 0%, rgba(56, 189, 200, 0.05) 0%, transparent 50%),
-    radial-gradient(ellipse at 75% 100%, rgba(56, 189, 200, 0.04) 0%, transparent 50%),
-    var(--bg-dark);
+  background: var(--bg-color-main);
 }
 
-/* Animated grid background */
+/* Subtle grid background */
 .payment-wrapper::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(56, 189, 200, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56, 189, 200, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: payGridScroll 25s linear infinite;
+    linear-gradient(var(--glass-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.5;
   pointer-events: none;
 }
 
@@ -52,19 +32,18 @@
   100% { transform: translate(60px, 60px); }
 }
 
-/* Floating orb - left */
+/* Floating orb */
 .payment-wrapper::after {
   content: '';
   position: absolute;
-  width: 500px;
-  height: 500px;
+  width: min(450px, 70vw);
+  height: min(450px, 70vw);
   border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-glow), transparent 70%);
-  top: -20%;
+  background: radial-gradient(circle, var(--accent-glow), transparent 65%);
+  top: -15%;
   left: -10%;
-  animation: payOrbDrift 12s ease-in-out infinite alternate;
+  animation: payOrbDrift 14s ease-in-out infinite alternate;
   pointer-events: none;
-  opacity: 0.2;
 }
 
 @keyframes payOrbDrift {
@@ -82,10 +61,10 @@
   left: 0;
   width: 100%;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, rgba(74, 222, 128, 0.15), rgba(56, 189, 200, 0.1));
+  background: linear-gradient(135deg, rgba(125, 155, 118, 0.2), rgba(184, 149, 107, 0.1));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(74, 222, 128, 0.2);
+  border-bottom: 1px solid rgba(125, 155, 118, 0.3);
   color: var(--success);
   font-weight: 700;
   font-size: 1rem;
@@ -128,7 +107,7 @@
 .payment-box {
   width: 100%;
   max-width: 480px;
-  background: var(--card-bg);
+  background: var(--glass-bg);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--glass-border);
@@ -136,9 +115,7 @@
   padding: 2.5rem 2.25rem;
   position: relative;
   z-index: 2;
-  box-shadow:
-    0 24px 64px rgba(0, 0, 0, 0.45),
-    0 0 50px rgba(56, 189, 200, 0.04);
+  box-shadow: var(--glass-shadow), 0 0 40px var(--accent-subtle);
   animation: boxEntrance 0.7s var(--transition-smooth) both;
 }
 
@@ -181,9 +158,9 @@
   width: 40px;
   height: 40px;
   background-image:
-    radial-gradient(circle, rgba(56, 189, 200, 0.15) 1px, transparent 1px);
+    radial-gradient(circle, var(--accent-primary) 1px, transparent 1px);
   background-size: 8px 8px;
-  opacity: 0.6;
+  opacity: 0.2;
   pointer-events: none;
 }
 
@@ -373,8 +350,8 @@
 .pay-button {
   width: 100%;
   padding: 1rem;
-  background: linear-gradient(135deg, var(--accent-primary), #2da8b3);
-  color: #0a0f1e;
+  background: var(--gradient-main);
+  color: #fff;
   font-weight: 800;
   font-size: 1.05rem;
   letter-spacing: 0.06em;

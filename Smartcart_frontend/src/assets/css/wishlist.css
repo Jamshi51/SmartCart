@@ -1,38 +1,28 @@
 /* ============================================
-   WISHLIST.CSS - Wishlist Page
+   WISHLIST - Nude Theme
    SmartCart E-Commerce
    ============================================ */
-
-:root {
-  --bg-dark: #0a0f1e;
-  --bg-surface: #111827;
-  --accent-primary: #38bdc8;
-  --accent-glow: rgba(56, 189, 200, 0.35);
-  --text-primary: #f0f4f8;
-  --text-secondary: #94a3b8;
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --card-bg: rgba(17, 24, 39, 0.85);
-  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --heart-color: #ef4444;
-}
-
-/* --- Wishlist Container (the outermost div) --- */
-.wishlist-page,
-div:has(> h2:first-child) {
-  /* Targets the parent div containing the wishlist */
-}
-
-/* We target the Wishlist page's root div via structure */
-/* The component renders a <div> with <h2> and items */
 
 /* --- Page Wrapper --- */
 body .wishlist-wrapper,
 div:has(> h2) {
   min-height: 100vh;
   padding: 7rem 5% 4rem;
-  background:
-    radial-gradient(ellipse at 60% 10%, rgba(56, 189, 200, 0.03), transparent 50%),
-    var(--bg-dark);
+  background: var(--bg-color-main);
+  position: relative;
+}
+
+body .wishlist-wrapper::before,
+div:has(> h2)::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  right: 15%;
+  width: min(350px, 50vw);
+  height: min(350px, 50vw);
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+  filter: blur(80px);
+  pointer-events: none;
 }
 
 /* --- Title (h2) --- */
@@ -63,7 +53,7 @@ div > h2 ~ div:has(> img) {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  background: var(--card-bg);
+  background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 1.25rem;
@@ -89,7 +79,7 @@ div > h2 ~ div:has(> img)::before {
   top: 0;
   width: 3px;
   height: 0;
-  background: linear-gradient(180deg, var(--heart-color), var(--accent-primary));
+  background: var(--gradient-main);
   transition: height 0.4s var(--transition-smooth);
   border-radius: 0 3px 3px 0;
 }
@@ -99,8 +89,8 @@ div > h2 ~ div:has(> img):hover::before {
 }
 
 div > h2 ~ div:has(> img):hover {
-  border-color: rgba(56, 189, 200, 0.15);
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+  border-color: var(--accent-primary);
+  box-shadow: 0 12px 40px rgba(61, 54, 53, 0.1), 0 0 24px var(--accent-subtle);
   transform: translateY(-4px);
 }
 
@@ -163,7 +153,7 @@ div > h2 ~ div > button::before {
 }
 
 div > h2 ~ div > button:hover {
-  color: #0a0f1e;
+  color: #fff;
   box-shadow: 0 0 20px var(--accent-glow);
 }
 

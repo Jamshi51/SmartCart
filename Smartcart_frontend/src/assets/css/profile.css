@@ -1,32 +1,28 @@
 /* ============================================
-   PROFILE.CSS - Profile & Orders Page
+   PROFILE - Nude Theme
    SmartCart E-Commerce
    ============================================ */
 
-:root {
-  --bg-dark: #0a0f1e;
-  --bg-surface: #111827;
-  --accent-primary: #38bdc8;
-  --accent-glow: rgba(56, 189, 200, 0.35);
-  --text-primary: #f0f4f8;
-  --text-secondary: #94a3b8;
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --card-bg: rgba(17, 24, 39, 0.85);
-  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --success: #4ade80;
-  --warning: #fbbf24;
-}
-
-/* --- Page Container --- */
 .profile-page-container {
   display: flex;
   gap: 2.5rem;
   min-height: 100vh;
   padding: 7rem 5% 4rem;
-  background:
-    radial-gradient(ellipse at 10% 20%, rgba(56, 189, 200, 0.03), transparent 50%),
-    var(--bg-dark);
+  background: var(--bg-color-main);
+  position: relative;
   animation: pageFadeIn 0.5s var(--transition-smooth) both;
+}
+
+.profile-page-container::before {
+  content: '';
+  position: absolute;
+  top: 15%;
+  right: 10%;
+  width: min(350px, 50vw);
+  height: min(350px, 50vw);
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+  filter: blur(80px);
+  pointer-events: none;
 }
 
 @keyframes pageFadeIn {
@@ -48,7 +44,7 @@
 }
 
 .profile-card {
-  background: var(--card-bg);
+  background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   overflow: hidden;
@@ -74,7 +70,7 @@
   left: 0;
   right: 0;
   height: 100px;
-  background: linear-gradient(135deg, rgba(56, 189, 200, 0.1), rgba(56, 189, 200, 0.02));
+  background: var(--gradient-soft);
   border-bottom: 1px solid var(--glass-border);
 }
 
@@ -187,7 +183,7 @@
 }
 
 .profile-header > button:hover {
-  color: #0a0f1e;
+  color: #fff;
   box-shadow: 0 0 15px var(--accent-glow);
 }
 
@@ -238,7 +234,7 @@
 .save-btn {
   padding: 0.8rem 1.5rem;
   background: var(--accent-primary);
-  color: #0a0f1e;
+  color: #fff;
   font-weight: 700;
   font-size: 0.9rem;
   border: none;
@@ -318,7 +314,7 @@
 }
 
 .order-card {
-  background: var(--card-bg);
+  background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 1.25rem;
