@@ -1,11 +1,35 @@
 :root {
+  /* Dark theme */
   --bg-dark: #0b1220;
   --bg-dark-secondary: #0f172a;
+  --bg-color-main: #0b1220;
+  --bg-color-secondary: #0f172a;
   --card-bg: #1e293b;
   --accent: #6366f1;
+  --accent-primary: #6366f1;
   --accent-light: #818cf8;
+  --accent-glow: rgba(99, 102, 241, 0.35);
+  --accent-subtle: rgba(99, 102, 241, 0.12);
   --text-main: #ffffff;
+  --text-primary: #ffffff;
   --text-muted: #94a3b8;
+  --text-secondary: #94a3b8;
+  --gradient-main: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --gradient-text: linear-gradient(135deg, #818cf8, #a78bfa);
+  --font-main: 'Outfit', 'Inter', system-ui, sans-serif;
+  --glass-bg: rgba(30, 41, 59, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --glass-blur: blur(12px);
+  --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s ease;
+  --transition-fast: 0.2s ease;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --bounce-hover: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --text-hero: clamp(2rem, 5vw + 1rem, 3.5rem);
+  --text-h1: clamp(1.6rem, 3vw, 2.25rem);
+  --text-h2: clamp(1.4rem, 2.5vw, 1.9rem);
+  --text-body: clamp(0.95rem, 1vw, 1.05rem);
 }
 
 
@@ -169,7 +193,7 @@ textarea::placeholder {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-color-main);
+  background: var(--bg-dark);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -266,7 +290,7 @@ textarea::placeholder {
    AUTH PAGES BACKGROUND (Login/Register)
    ========================================= */
 .auth-background {
-  background: var(--bg-color-main);
+  background: var(--bg-dark);
   position: relative;
   overflow: hidden;
 }

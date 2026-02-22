@@ -1,24 +1,32 @@
 /* ============================================
-   Footer - Nude Colored Design
+   Footer - Dark Theme, Correctly Aligned
    SmartCart E-Commerce
    ============================================ */
 
 .footer {
   width: 100%;
-  padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 4%, 2rem);
-  background: var(--bg-card);
+  padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 5%, 2.5rem);
+  background: var(--bg-dark-secondary);
   border-top: 1px solid var(--glass-border);
-  color: var(--text-secondary);
-  box-shadow: 0 -4px 24px rgba(61, 54, 53, 0.04);
+  color: var(--text-muted);
 }
 
-/* Layout */
+/* Layout - Centered, properly aligned */
 .footer-wrapper {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+  justify-items: start;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
 }
 
 /* Brand */
@@ -28,52 +36,44 @@
   background: var(--gradient-text);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 1rem;
+  background-clip: text;
+  margin-bottom: 0.75rem;
+}
+
+.footer-section > p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
 }
 
 /* Section headings */
 .footer-section h3 {
   color: var(--text-primary);
   margin-bottom: 1rem;
-  position: relative;
   font-size: 1rem;
+  font-weight: 600;
 }
 
-.footer-section h3::after {
-  content: "";
-  position: absolute;
-  bottom: -6px;
-  left: 0;
-  width: 36px;
-  height: 2px;
-  background: var(--gradient-main);
-  border-radius: 2px;
-  transition: width 0.35s var(--transition-smooth);
-}
-
-.footer-section h3:hover::after {
-  width: 56px;
-}
-
-/* Links */
+/* Links - left aligned, consistent spacing */
 .footer-section a {
   display: block;
   text-decoration: none;
-  color: var(--text-secondary);
-  margin: 0.6rem 0;
+  color: var(--text-muted);
+  margin: 0.5rem 0;
   font-size: 0.9rem;
-  transition: all 0.3s var(--transition-smooth);
+  transition: all 0.25s ease;
 }
 
 .footer-section a:hover {
   color: var(--accent-primary);
-  transform: translateX(6px);
 }
 
-/* Bottom */
+/* Bottom - centered */
 .footer-bottom {
-  margin-top: clamp(2rem, 4vw, 2.5rem);
-  padding-top: 1.25rem;
+  max-width: 1200px;
+  margin: clamp(2rem, 4vw, 2.5rem) auto 0;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--glass-border);
   text-align: center;
   font-size: 0.85rem;
@@ -83,10 +83,15 @@
 /* Responsive */
 @media (max-width: 768px) {
   .footer {
-    padding: 2rem 1.25rem 1.25rem;
+    padding: 2rem 1.25rem 1.5rem;
   }
 
-  .footer-section h3::after {
-    width: 40px;
+  .footer-wrapper {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .footer-section {
+    align-items: center;
   }
 }
