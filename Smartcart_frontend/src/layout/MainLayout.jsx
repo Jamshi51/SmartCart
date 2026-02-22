@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Footer from "../components/footer";
 
 const MainLayout = () => {
   return (
@@ -9,7 +9,7 @@ const MainLayout = () => {
       <main className="main-content">
         <Outlet /> {/* Page content comes here */}
       </main>
-      <Footer />
+      <Footer/>
     </div>
   );
 };

@@ -27,9 +27,10 @@
   justify-content: center;
   overflow: hidden;
   padding: 6rem 2rem 4rem;
+  width: 100%;
 
   /* --- Background Image --- */
-  background-image: url('/images/hero-bg.jpg');
+  background-image: url('https://png.pngtree.com/background/20231101/original/pngtree-smartphone-and-tablet-computer-resting-on-blue-office-desk-3d-rendered-picture-image_5836436.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -206,6 +207,7 @@
   background: var(--bg-dark);
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 /* Subtle accent line */
@@ -354,6 +356,7 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 /* Animated background particles */

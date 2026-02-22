@@ -1,36 +1,37 @@
-
-
 import "../assets/css/footer.css";
+import { Link } from "react-router-dom";
 
-const Footer = () => (
-  <footer className="footer">
-  <div className="footer-content">
-    
-    <div className="footer-section">
-      <h2>SmartCart</h2>
-      <p>Your trusted electronics partner.</p>
-    </div>
+const Footer = () => {
+  return (
+    <footer className="footer">
+      <div className="footer-wrapper">
 
-    <div className="footer-section">
-      <h3>Quick Links</h3>
-      <p>Home</p>
-      <p>Products</p>
-      <p>Contact</p>
-    </div>
+        <div className="footer-section">
+          <h2 className="footer-brand">SmartCart</h2>
+          <p>Your trusted electronics partner.</p>
+        </div>
 
-    <div className="footer-section">
-      <h3>Support</h3>
-      <p>Help Center</p>
-      <p>Privacy Policy</p>
-      <p>Terms & Conditions</p>
-    </div>
+        <div className="footer-section">
+          <h3>Quick Links</h3>
+          <Link to="/">Home</Link>
+          <Link to="/products">Products</Link>
+          <Link to="/contact">Contact</Link>
+        </div>
 
-  </div>
+        <div className="footer-section">
+          <h3>Support</h3>
+          <Link to="/help">Help Center</Link>
+          <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/terms">Terms & Conditions</Link>
+        </div>
 
-  <div className="copyright">
-    © 2026 SmartCart. All rights reserved.
-  </div>
-</footer>
-);
+      </div>
+
+      <div className="footer-bottom">
+        © 2026 SmartCart. All rights reserved.
+      </div>
+    </footer>
+  );
+};
 
 export default Footer;
