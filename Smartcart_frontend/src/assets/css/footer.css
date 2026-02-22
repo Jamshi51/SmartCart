@@ -1,97 +1,153 @@
 /* ============================================
-   Footer - Dark Theme, Correctly Aligned
-   SmartCart E-Commerce
+   FOOTER STYLES - Dark Nude Theme
    ============================================ */
 
 .footer {
-  width: 100%;
-  padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 5%, 2.5rem);
-  background: var(--bg-dark-secondary);
-  border-top: 1px solid var(--glass-border);
-  color: var(--text-muted);
+  background: linear-gradient(180deg, #8b6f47 0%, #6d5936 100%);
+  border-top: 2px solid rgba(0, 0, 0, 0.2);
+  padding: 3rem 2rem 1.5rem;
+  margin-top: 4rem;
+  box-shadow: 0 -6px 20px rgba(139, 111, 71, 0.2);
 }
 
-/* Layout - Centered, properly aligned */
+/* FOOTER WRAPPER */
 .footer-wrapper {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: clamp(2rem, 4vw, 3rem);
-  align-items: start;
-  justify-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2.5rem;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.6s ease-out;
 }
 
+/* FOOTER SECTIONS */
 .footer-section {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
+  gap: 1rem;
 }
 
-/* Brand */
-.footer-brand {
-  font-size: clamp(1.4rem, 2vw, 1.6rem);
+.footer-section h2,
+.footer-section h3 {
+  color: #f9f6f2;
   font-weight: 800;
-  background: var(--gradient-text);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.footer-brand {
+  background: linear-gradient(135deg, #f9f6f2, #e8d5b7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 0.75rem;
-}
-
-.footer-section > p {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin: 0;
-  line-height: 1.5;
-}
-
-/* Section headings */
-.footer-section h3 {
-  color: var(--text-primary);
+  font-size: 1.5rem;
   margin-bottom: 1rem;
-  font-size: 1rem;
-  font-weight: 600;
 }
 
-/* Links - left aligned, consistent spacing */
+.footer-section p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
 .footer-section a {
-  display: block;
+  color: rgba(201, 169, 97, 0.75);
   text-decoration: none;
-  color: var(--text-muted);
-  margin: 0.5rem 0;
-  font-size: 0.9rem;
-  transition: all 0.25s ease;
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+  position: relative;
+  display: inline-block;
+}
+
+.footer-section a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #c9a961;
+  transition: width var(--transition-fast);
 }
 
 .footer-section a:hover {
-  color: var(--accent-primary);
+  color: #d4a574;
 }
 
-/* Bottom - centered */
+.footer-section a:hover::after {
+  width: 100%;
+}
+
+/* FOOTER BOTTOM */
 .footer-bottom {
   max-width: 1200px;
-  margin: clamp(2rem, 4vw, 2.5rem) auto 0;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--glass-border);
+  margin: 0 auto;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(201, 169, 97, 0.1);
   text-align: center;
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  color: rgba(201, 169, 97, 0.65);
+  font-size: 0.9rem;
+  animation: slideUp 0.6s ease-out 0.1s both;
+  opacity: 0;
 }
 
-/* Responsive */
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .footer {
-    padding: 2rem 1.25rem 1.5rem;
+    padding: 2.5rem 1.5rem 1rem;
+    margin-top: 3rem;
   }
 
   .footer-wrapper {
-    justify-items: center;
-    text-align: center;
+    gap: 2rem;
   }
 
-  .footer-section {
-    align-items: center;
+  .footer-section h2,
+  .footer-section h3 {
+    font-size: 1rem;
+  }
+
+  .footer-section p,
+  .footer-section a {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 2rem 1rem 0.8rem;
+  }
+
+  .footer-wrapper {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-bottom {
+    padding-top: 1.5rem;
+    font-size: 0.85rem;
   }
 }

@@ -86,8 +86,7 @@ function Products() {
 
 
   return (
-    <div className="page-container">
-      <main className="main-content">
+   
     <div className="products-page">
 
       <div className="products-header">
@@ -95,7 +94,7 @@ function Products() {
 
       </div>
 
-      <div className="product--grid">
+      <div className="product-grid">
         {products.length === 0 && (
           <div className="no-products">
             <h2>No products found</h2>
@@ -104,8 +103,8 @@ function Products() {
         )}
 
         {products.map(product => (
-          <div key={product.id} className="product--card">
-            <div className="image--container">
+          <div key={product.id} className="product-card">
+            <div className="image-container">
               <img
                 src={product.image}
                 alt={product.name}
@@ -156,8 +155,7 @@ function Products() {
 
 
     </div>
-    </main>
-    </div>
+    
   );
 
 }

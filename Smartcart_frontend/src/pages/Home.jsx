@@ -40,15 +40,19 @@ const Home = () => {
       {/* HERO SECTION */}
       <section className="hero">
         <div className="hero-content">
-          <h4>WELCOME TO SMARTCART</h4>
-          <h1>Make Technology a Part of Your Life</h1>
-          <p>
-            Discover premium electronics accessories that blend innovation,
-            style, and performance.
-          </p>
-          <button className="btn-primary" onClick={() => navigate("/products")}>
-            SHOP NOW
-          </button>
+          <div className="hero-text">
+            <h4>WELCOME TO SMARTCART</h4>
+            <h1>Make Technology a Part of Your Life</h1>
+            <p>
+              Discover premium electronics accessories that blend innovation,
+              style, and performance. Shop smart deals on the latest gadgets,
+              accessories, and tech essentials.
+            </p>
+            <button className="btn-primary" onClick={() => navigate("/products")}>
+              SHOP NOW
+            </button>
+          </div>
+          
         </div>
       </section>
       {/* ABOUT SECTION */}
@@ -79,6 +83,26 @@ const Home = () => {
           <button onClick={() => navigate("/products")} className="btn-secondary">EXPLORE NOW</button>
         </div>
       </section>
+      {/* FEATURES SECTION */}
+<section className="features">
+  <div className="feature-card">
+    <div className="feature-icon">🚚</div>
+    <h3>Free Shipping</h3>
+    <p>Enjoy free shipping on all orders across India.</p>
+  </div>
+
+  <div className="feature-card">
+    <div className="feature-icon">🔄</div>
+    <h3>Free Returns</h3>
+    <p>Easy 7-day return policy for a stress-free experience.</p>
+  </div>
+
+  <div className="feature-card">
+    <div className="feature-icon">💬</div>
+    <h3>24/7 Support</h3>
+    <p>Our support team is available anytime you need help.</p>
+  </div>
+</section>
       {/* PRODUCTS SECTION */}
       <section className="products">
   <h2>Latest Products</h2>

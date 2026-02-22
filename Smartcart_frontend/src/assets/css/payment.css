@@ -1,6 +1,5 @@
 /* ============================================
-   PAYMENT - Nude Theme
-   SmartCart E-Commerce
+   PAYMENT PAGE STYLES - Dark Nude Theme
    ============================================ */
 
 .payment-wrapper {
@@ -8,499 +7,252 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6rem 5% 4rem;
+  background: linear-gradient(135deg, #faf8f4 0%, #f5f1ed 100%);
+  padding: 2rem;
   position: relative;
   overflow: hidden;
-  background: var(--bg-color-main);
 }
 
-/* Subtle grid background */
+/* BACKGROUND EFFECTS */
 .payment-wrapper::before {
   content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--glass-border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
-  background-size: 48px 48px;
-  opacity: 0.5;
+  position: fixed;
+  top: -10%;
+  right: -5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(212, 165, 116, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(120px);
+  animation: floatAnim 8s ease-in-out infinite;
+  z-index: -1;
   pointer-events: none;
 }
 
-@keyframes payGridScroll {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(60px, 60px); }
-}
-
-/* Floating orb */
 .payment-wrapper::after {
   content: '';
-  position: absolute;
-  width: min(450px, 70vw);
-  height: min(450px, 70vw);
+  position: fixed;
+  bottom: -10%;
+  left: 5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(168, 138, 93, 0.1) 0%, transparent 70%);
   border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-glow), transparent 65%);
-  top: -15%;
-  left: -10%;
-  animation: payOrbDrift 14s ease-in-out infinite alternate;
+  filter: blur(100px);
+  animation: floatAnim 10s ease-in-out infinite reverse;
+  z-index: -1;
   pointer-events: none;
 }
 
-@keyframes payOrbDrift {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(40px, 30px) scale(1.12); }
-  100% { transform: translate(-20px, -20px) scale(0.92); }
-}
-
-/* ============================================
-   SUCCESS BANNER - Top Notification
-   ============================================ */
+/* SUCCESS BANNER */
 .success-top {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, rgba(125, 155, 118, 0.2), rgba(184, 149, 107, 0.1));
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(125, 155, 118, 0.3);
-  color: var(--success);
-  font-weight: 700;
-  font-size: 1rem;
+  right: 0;
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  color: white;
+  padding: 1rem;
   text-align: center;
-  letter-spacing: 0.02em;
-  z-index: 1000;
-  animation: successSlideDown 0.5s var(--transition-smooth) both;
+  font-weight: 700;
+  font-size: 1.1rem;
+  z-index: 2000;
+  animation: slideDown 0.5s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.success-top::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--success), var(--accent-primary), transparent);
-  animation: successShimmer 2s ease-in-out infinite;
-}
-
-@keyframes successSlideDown {
+@keyframes slideDown {
   from {
-    opacity: 0;
     transform: translateY(-100%);
   }
   to {
-    opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes successShimmer {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
-}
-
-/* ============================================
-   PAYMENT BOX - Main Glass Card
-   ============================================ */
+/* PAYMENT BOX */
 .payment-box {
+  background: rgba(35, 32, 29, 0.8);
+  border: 1px solid rgba(201, 169, 97, 0.2);
+  border-radius: 16px;
+  padding: 2.5rem;
+  max-width: 450px;
   width: 100%;
-  max-width: 480px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  padding: 2.5rem 2.25rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  animation: scaleIn 0.6s ease-out;
   position: relative;
-  z-index: 2;
-  box-shadow: var(--glass-shadow), 0 0 40px var(--accent-subtle);
-  animation: boxEntrance 0.7s var(--transition-smooth) both;
+  z-index: 1;
 }
 
-@keyframes boxEntrance {
-  from {
-    opacity: 0;
-    transform: translateY(50px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Top glow accent line */
-.payment-box::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
-  border-radius: 0 0 4px 4px;
-  animation: topGlowPulse 3s ease-in-out infinite;
-}
-
-@keyframes topGlowPulse {
-  0%, 100% { opacity: 0.4; width: 50px; }
-  50% { opacity: 1; width: 110px; }
-}
-
-/* Decorative corner dots */
-.payment-box::after {
-  content: '';
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  width: 40px;
-  height: 40px;
-  background-image:
-    radial-gradient(circle, var(--accent-primary) 1px, transparent 1px);
-  background-size: 8px 8px;
-  opacity: 0.2;
-  pointer-events: none;
-}
-
-/* ============================================
-   TITLE
-   ============================================ */
 .payment-title {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--text-primary);
+  font-size: 1.8rem;
+  color: #f5f1ed;
   text-align: center;
-  margin-bottom: 2rem;
-  letter-spacing: -0.01em;
-  position: relative;
-  animation: titleReveal 0.6s var(--transition-smooth) 0.25s both;
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
-.payment-title::after {
-  content: '';
-  display: block;
-  width: 36px;
-  height: 3px;
-  background: var(--accent-primary);
-  border-radius: 3px;
-  margin: 0.6rem auto 0;
-  animation: underlineExpand 0.8s var(--transition-smooth) 0.5s both;
-}
-
-@keyframes titleReveal {
-  from { opacity: 0; transform: translateY(-12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes underlineExpand {
-  from { width: 0; }
-  to { width: 36px; }
-}
-
-/* ============================================
-   PAYMENT METHODS - Tab Buttons
-   ============================================ */
+/* PAYMENT METHODS */
 .payment-methods {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
   margin-bottom: 2rem;
-  animation: methodsFadeIn 0.5s var(--transition-smooth) 0.35s both;
-}
-
-@keyframes methodsFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 .payment-methods button {
   flex: 1;
-  padding: 0.9rem 1rem;
-  border: 2px solid var(--glass-border);
-  border-radius: 14px;
-  background: rgba(10, 15, 30, 0.5);
-  color: var(--text-secondary);
+  padding: 0.9rem;
+  background: rgba(201, 169, 97, 0.1);
+  border: 2px solid rgba(212, 165, 116, 0.2);
+  color: #c9a961;
+  border-radius: 10px;
+  font-weight: 700;
   font-size: 0.95rem;
-  font-weight: 600;
   cursor: pointer;
-  transition: all 0.4s var(--transition-smooth);
-  font-family: inherit;
-  position: relative;
-  overflow: hidden;
-  letter-spacing: 0.02em;
-}
-
-.payment-methods button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(56, 189, 200, 0.08), transparent);
-  opacity: 0;
-  transition: opacity 0.4s var(--transition-smooth);
+  transition: all var(--transition-fast);
 }
 
 .payment-methods button:hover {
-  border-color: rgba(56, 189, 200, 0.3);
-  color: var(--text-primary);
-  transform: translateY(-2px);
-}
-
-.payment-methods button:hover::before {
-  opacity: 1;
+  border-color: #d4a574;
+  background: rgba(212, 165, 116, 0.15);
 }
 
 .payment-methods button.active {
-  border-color: var(--accent-primary);
-  background: rgba(56, 189, 200, 0.08);
-  color: var(--accent-primary);
-  box-shadow: 0 0 24px rgba(56, 189, 200, 0.12);
-  transform: translateY(-2px);
+  background: linear-gradient(135deg, #c9a961, #b8934a);
+  color: #1a1815;
+  border-color: #d4a574;
+  box-shadow: 0 4px 12px rgba(201, 169, 97, 0.35);
 }
 
-.payment-methods button.active::before {
-  opacity: 1;
-}
-
-/* Active indicator dot */
-.payment-methods button.active::after {
-  content: '';
-  position: absolute;
-  bottom: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-primary);
-  box-shadow: 0 0 10px var(--accent-glow);
-  animation: activeDotPulse 2s ease-in-out infinite;
-}
-
-@keyframes activeDotPulse {
-  0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
-  50% { opacity: 1; transform: translateX(-50%) scale(1.3); }
-}
-
-/* ============================================
-   PAYMENT FORM - Inputs
-   ============================================ */
+/* PAYMENT FORM */
 .payment-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
   margin-bottom: 2rem;
-  animation: formSlideUp 0.45s var(--transition-smooth) both;
-}
-
-@keyframes formSlideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  animation: fadeIn 0.4s ease-out;
 }
 
 .payment-form input {
-  width: 100%;
-  padding: 0.9rem 1.1rem;
-  background: rgba(10, 15, 30, 0.6);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  color: var(--text-primary);
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(212, 165, 116, 0.2);
+  border-radius: 10px;
+  color: #f5f1ed;
   font-size: 0.95rem;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.1em;
   outline: none;
-  transition: all 0.35s var(--transition-smooth);
-  font-family: inherit;
-  box-sizing: border-box;
+  transition: all var(--transition-fast);
 }
 
 .payment-form input::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.65;
+  color: rgba(201, 169, 97, 0.5);
 }
 
 .payment-form input:focus {
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 24px rgba(56, 189, 200, 0.12);
-  background: rgba(10, 15, 30, 0.85);
+  background: rgba(0, 0, 0, 0.5);
+  border-color: #d4a574;
+  box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
 }
 
-/* Focus glow ring animation */
-.payment-form input:focus-visible {
-  outline: none;
-  animation: inputFocusGlow 0.3s var(--transition-smooth) both;
-}
-
-@keyframes inputFocusGlow {
-  from { box-shadow: 0 0 0px rgba(56, 189, 200, 0); }
-  to { box-shadow: 0 0 24px rgba(56, 189, 200, 0.12); }
-}
-
-/* --- Row (Expiry + CVV side by side) --- */
+/* ROW (For expiry and CVV) */
 .payment-form .row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
 .payment-form .row input {
-  flex: 1;
+  grid-column: span 1;
 }
 
-/* ============================================
-   PAY NOW BUTTON
-   ============================================ */
+/* PAY BUTTON */
 .pay-button {
   width: 100%;
-  padding: 1rem;
-  background: var(--gradient-main);
-  color: #fff;
-  font-weight: 800;
-  font-size: 1.05rem;
-  letter-spacing: 0.06em;
+  padding: 1.1rem;
+  background: linear-gradient(135deg, #c9a961, #b8934a);
+  color: #1a1815;
   border: none;
-  border-radius: 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.05rem;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s var(--transition-smooth);
-  font-family: inherit;
-  animation: btnEntrance 0.5s var(--transition-smooth) 0.5s both;
-}
-
-@keyframes btnEntrance {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Shimmer sweep on hover */
-.pay-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.6s var(--transition-smooth);
+  transition: all var(--transition-fast);
+  box-shadow: 0 6px 20px rgba(201, 169, 97, 0.35);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .pay-button:hover {
-  box-shadow: 0 10px 36px var(--accent-glow);
-  transform: translateY(-3px);
-}
-
-.pay-button:hover::before {
-  left: 100%;
+  box-shadow: 0 8px 28px rgba(201, 169, 97, 0.45);
+  transform: translateY(-2px);
 }
 
 .pay-button:active {
-  transform: translateY(0) scale(0.97);
-  box-shadow: 0 4px 16px rgba(56, 189, 200, 0.2);
+  transform: translateY(0);
 }
 
-/* Ripple effect on click */
-.pay-button::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  top: 50%;
-  left: 50%;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: translate(-50%, -50%);
-  transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
-  opacity: 0;
-}
-
-.pay-button:active::after {
-  width: 300px;
-  height: 300px;
-  opacity: 0;
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/* Tablet */
-@media (max-width: 768px) {
-  .payment-wrapper {
-    padding: 5rem 4% 3rem;
+/* ANIMATIONS */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
   }
-
-  .payment-box {
-    max-width: 100%;
-    padding: 2rem 1.75rem;
-    border-radius: 20px;
-  }
-
-  .payment-title {
-    font-size: 1.4rem;
-  }
-
-  .payment-methods button {
-    padding: 0.8rem 0.75rem;
-    font-size: 0.9rem;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-/* Mobile */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes floatAnim {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* RESPONSIVE */
 @media (max-width: 480px) {
   .payment-wrapper {
-    padding: 4.5rem 3% 2rem;
-    align-items: flex-start;
-    padding-top: 5.5rem;
+    padding: 1rem;
   }
 
   .payment-box {
-    padding: 1.75rem 1.25rem;
-    border-radius: 18px;
+    padding: 2rem 1.5rem;
   }
 
   .payment-title {
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
   }
 
   .payment-methods {
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    flex-direction: column;
   }
 
   .payment-methods button {
-    padding: 0.75rem 0.5rem;
-    font-size: 0.85rem;
-    border-radius: 12px;
-  }
-
-  .payment-form input {
-    padding: 0.8rem 0.9rem;
-    font-size: 0.9rem;
+    padding: 0.8rem;
   }
 
   .payment-form .row {
-    flex-direction: column;
-    gap: 0.75rem;
+    grid-template-columns: 1fr;
   }
 
   .pay-button {
-    padding: 0.9rem;
-    font-size: 0.95rem;
-    border-radius: 12px;
-  }
-
-  .success-top {
-    font-size: 0.88rem;
-    padding: 0.85rem 1rem;
-  }
-}
-
-/* Small Mobile */
-@media (max-width: 360px) {
-  .payment-box {
-    padding: 1.5rem 1rem;
-  }
-
-  .payment-title {
-    font-size: 1.15rem;
+    padding: 1rem;
+    font-size: 1rem;
   }
 }

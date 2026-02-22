@@ -88,21 +88,6 @@ const Navbar = () => {
         </div>
       </Link>
 
-      {/* DESKTOP SEARCH BAR */}
-      {user?.role !== "seller" && (
-        <form className="nav-search" onSubmit={handleSearch}>
-          <input
-            type="text"
-            placeholder="Search amazing products..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <button type="submit" className="search-btn" aria-label="Search">
-            <Search size={20} />
-          </button>
-        </form>
-      )}
-
       {/* HAMBURGER TOGGLE */}
       <div
         className="hamburger"
@@ -123,7 +108,7 @@ const Navbar = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <button type="submit" className="search-btn" aria-label="Search">
+            <button type="submit" className="search-btn" aria-label="Search Amazing">
               <Search size={20} />
             </button>
           </form>

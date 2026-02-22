@@ -25,28 +25,37 @@ function Wishlist() {
   }
 
   return (
-    <div>
-      <h2>My Wishlist ❤️</h2>
+  <div className="wishlist-vertical">
+     <h2>My Wishlist ❤️</h2>
+  {items.map((item) => (
+    <div className="wishlist-item-horizontal" key={item.id}>
       
-      {items.map(item => (
-        <div key={item.id}>
-          <img src={`http://127.0.0.1:8000${item.product_image}`} width="100" />
-          <p>{item.product_name}</p>
-          <p>₹{item.product_price}</p>
-          <button
-            onClick={() => {
-              if (!item.product_slug) return alert("Product slug missing!");
-              navigate(`/products/${item.product_slug}`);
-            }}
-          >
-            View Product
-          </button>
-        </div>
-      ))}
+      <div className="wishlist-image-container">
+        <img
+          src={`http://127.0.0.1:8000${item.product_image}`}
+          alt={item.product_name}
+        />
+      </div>
 
-      
+      <div className="wishlist-item-content">
+        <h3>{item.product_name}</h3>
+        <p className="price">₹{item.product_price}</p>
+
+        <button
+          className="wishlist-btn"
+          onClick={() => {
+            if (!item.product_slug) return;
+            navigate(`/products/${item.product_slug}`);
+          }}
+        >
+          View Product
+        </button>
+      </div>
+
     </div>
-  );
+  ))}
+</div>
+);
 }
 
 export default Wishlist;

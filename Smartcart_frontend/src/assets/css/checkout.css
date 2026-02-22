@@ -1,218 +1,172 @@
 /* ============================================
-   CHECKOUT - Nude Theme
-   SmartCart E-Commerce
+   CHECKOUT PAGE STYLES - Dark Nude Theme
    ============================================ */
 
 .checkout-container {
-  display: flex;
-  gap: 3rem;
-  min-height: 100vh;
-  padding: 7rem 5% 4rem;
-  max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2.5rem;
+  max-width: 1200px;
   margin: 0 auto;
-  background: var(--bg-color-main);
-  position: relative;
-  animation: pageFadeIn 0.5s var(--transition-smooth) both;
+  padding: 3rem 2rem;
+  animation: fadeIn 0.6s ease-out;
 }
 
-.checkout-container::before {
-  content: '';
-  position: absolute;
-  top: 10%;
-  left: 15%;
-  width: min(400px, 50vw);
-  height: min(400px, 50vw);
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
-  filter: blur(80px);
-  pointer-events: none;
-}
-
-@keyframes pageFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* ============================================
-   LEFT SIDE - Shipping Form
-   ============================================ */
+/* LEFT SIDE - FORM */
 .checkout-left {
-  flex: 1.3;
-  animation: slideLeft 0.6s var(--transition-smooth) both;
-}
-
-@keyframes slideLeft {
-  from { opacity: 0; transform: translateX(-30px); }
-  to { opacity: 1; transform: translateX(0); }
+  animation: slideLeft 0.6s ease-out;
 }
 
 .checkout-left h2 {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--text-primary);
+  font-size: 1.5rem;
+  color: #2a2a2a;
   margin-bottom: 1.5rem;
-  position: relative;
-  display: inline-block;
+  font-weight: 800;
 }
 
-.checkout-left h2::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  left: 0;
-  width: 40px;
-  height: 3px;
-  background: var(--accent-primary);
-  border-radius: 3px;
-  animation: expandLine 0.8s var(--transition-smooth) 0.4s both;
+.checkout-left h3 {
+  font-size: 1.2rem;
+  color: #2a2a2a;
+  margin: 2rem 0 1.5rem;
+  font-weight: 700;
 }
 
-@keyframes expandLine {
-  from { width: 0; }
-  to { width: 40px; }
-}
-
-/* --- Form Group --- */
+/* FORM GROUPS */
 .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
   margin-bottom: 1.5rem;
 }
 
 .form-group label {
-  display: block;
   font-size: 0.85rem;
+  color: #7a7a7a;
   font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .form-group input,
 .form-group textarea {
-  width: 100%;
-  padding: 0.85rem 1rem;
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  color: var(--text-primary);
-  font-size: 0.95rem;
-  outline: none;
-  transition: all 0.35s var(--transition-smooth);
+  padding: 0.9rem 1rem;
+  background: #ede4d5;
+  border: 1.5px solid #dcc9b3;
+  border-radius: 10px;
+  color: #2a2a2a;
   font-family: inherit;
-  box-sizing: border-box;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  outline: none;
   resize: vertical;
+  min-height: 80px;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px var(--accent-subtle);
-  background: #fff;
+  background: #e8dcc8;
+  border-color: #a67c52;
+  box-shadow: 0 0 0 3px rgba(166, 124, 82, 0.12);
 }
 
-.form-group textarea {
-  min-height: 80px;
+.form-group input:disabled,
+.form-group textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-/* ============================================
-   PAYMENT SECTION
-   ============================================ */
+/* PAYMENT SECTION */
 .payment-section {
+  background: #e8dcc8;
+  border: 1.5px solid #dcc9b3;
+  border-radius: 12px;
+  padding: 1.5rem;
   margin-top: 2rem;
-}
-
-.payment-section h3 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
+  box-shadow: 0 4px 15px rgba(139, 111, 71, 0.1);
 }
 
 .payment-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
+  margin-top: 1rem;
 }
 
 .payment-card {
-  flex: 1;
-  display: flex;
-  cursor: pointer;
   position: relative;
 }
 
-.payment-card input[type="radio"] {
+.payment-card input {
   position: absolute;
-  opacity: 0;
   width: 0;
   height: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.payment-card input + div {
+  padding: 1.2rem;
+  background: #ede4d5;
+  border: 2px solid #dcc9b3;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.payment-card input:checked + div {
+  background: #d4bea0;
+  border-color: #a67c52;
+  box-shadow: 0 4px 12px rgba(166, 124, 82, 0.15);
+}
+
+.payment-icon {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
 }
 
 .payment-content {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  width: 100%;
-  padding: 1.25rem;
-  background: var(--glass-bg);
-  border: 2px solid var(--glass-border);
-  border-radius: 14px;
-  transition: all 0.4s var(--transition-smooth);
-}
-
-.payment-card input[type="radio"]:checked + .payment-content {
-  border-color: var(--accent-primary);
-  background: var(--accent-subtle);
-  box-shadow: 0 0 20px var(--accent-subtle);
-}
-
-.payment-content:hover {
-  border-color: var(--accent-primary);
-  transform: translateY(-2px);
-}
-
-.payment-icon {
-  font-size: 1.8rem;
-  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
 .payment-title {
-  font-size: 0.95rem;
+  color: #2a2a2a;
   font-weight: 700;
-  color: var(--text-primary);
+  font-size: 0.95rem;
 }
 
 .payment-sub {
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  margin-top: 0.15rem;
+  color: #7a7a7a;
+  font-size: 0.8rem;
 }
 
-/* ============================================
-   RIGHT SIDE - Product Summary Card
-   ============================================ */
+/* RIGHT SIDE - PRODUCT CARD */
 .checkout-right {
-  flex: 0.8;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 2rem;
-  align-self: flex-start;
   position: sticky;
-  top: 6rem;
-  animation: slideRight 0.6s var(--transition-smooth) 0.15s both;
-  text-align: center;
-}
-
-@keyframes slideRight {
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
+  top: 100px;
+  height: fit-content;
+  background: #e8dcc8;
+  border: 1.5px solid #dcc9b3;
+  border-radius: 14px;
+  padding: 2rem;
+  animation: slideRight 0.6s ease-out;
+  box-shadow: 0 4px 15px rgba(139, 111, 71, 0.1);
 }
 
 .checkout-right img {
   width: 100%;
-  height: 220px;
+  height: 250px;
   object-fit: cover;
-  border-radius: 14px;
-  margin-bottom: 1.25rem;
-  transition: transform 0.5s var(--transition-smooth);
+  border-radius: 10px;
+  background: #dcc9b3;
+  border: 1px solid #d4bea0;
+  margin-bottom: 1.5rem;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .checkout-right:hover img {
@@ -221,141 +175,170 @@
 
 .checkout-right h3 {
   font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.checkout-right > p {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
+  color: #2a2a2a;
   margin-bottom: 1rem;
+  font-weight: 700;
 }
 
-/* --- Quantity Box --- */
-.checkout-right .quantity-box,
+.checkout-right p {
+  color: #7a7a7a;
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+}
+
+/* QUANTITY BOX */
 .quantity-box {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  border: 1px solid var(--glass-border);
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--bg-color-secondary);
-  margin: 1rem 0;
+  gap: 0.8rem;
+  background: #ede4d5;
+  border: 1.5px solid #dcc9b3;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 1.5rem;
 }
 
 .quantity-box button {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: transparent;
   border: none;
-  color: var(--text-primary);
+  color: #a67c52;
   font-size: 1.2rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.25s var(--transition-smooth);
-  font-family: inherit;
+  padding: 0.2rem 0.4rem;
+  transition: all 0.2s ease;
 }
 
 .quantity-box button:hover {
-  background: var(--accent-primary);
-  color: #fff;
+  color: #8b6f47;
+  transform: scale(1.2);
 }
 
 .quantity-box span {
-  width: 50px;
-  text-align: center;
+  color: #2a2a2a;
   font-weight: 700;
-  font-size: 1rem;
-  color: var(--text-primary);
-  border-left: 1px solid var(--glass-border);
-  border-right: 1px solid var(--glass-border);
-  padding: 0.5rem 0;
+  flex: 1;
+  text-align: center;
 }
 
-/* --- Checkout Bottom (Total + Button) --- */
+/* CHECKOUT BOTTOM */
 .checkout-bottom {
-  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--glass-border);
+  border-top: 2px solid #dcc9b3;
 }
 
 .bottom-total {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--accent-primary);
-  margin-bottom: 1rem;
-}
-
-.checkout-bottom .btn-primary {
-  width: 100%;
-  padding: 0.9rem;
-  background: var(--gradient-main);
-  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.3rem;
   font-weight: 700;
-  font-size: 1rem;
-  letter-spacing: 0.04em;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s var(--transition-smooth);
-  font-family: inherit;
+  color: #a67c52;
 }
 
-.checkout-bottom .btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
+.checkout-right .btn-primary {
   width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-  transition: left 0.6s var(--transition-smooth);
+  padding: 1rem;
+  font-size: 1rem;
 }
 
-.checkout-bottom .btn-primary:hover {
-  box-shadow: 0 8px 30px var(--accent-glow);
-  transform: translateY(-2px);
+/* ANIMATIONS */
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.checkout-bottom .btn-primary:hover::before {
-  left: 100%;
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-@media (max-width: 900px) {
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
   .checkout-container {
-    flex-direction: column;
-    padding: 6rem 4% 3rem;
+    grid-template-columns: 1fr;
     gap: 2rem;
   }
 
   .checkout-right {
-    position: static;
-    order: -1;
-  }
-
-  .payment-grid {
-    flex-direction: column;
+    position: relative;
+    top: 0;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .checkout-container {
-    padding: 5.5rem 3% 2rem;
+    padding: 2rem 1rem;
+  }
+
+  .payment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-left h2,
+  .checkout-left h3 {
+    font-size: 1.3rem;
+  }
+
+  .checkout-right img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.8rem;
+  }
+
+  .payment-card input + div {
+    padding: 1rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .payment-content {
+    width: 100%;
   }
 
   .checkout-right {
     padding: 1.5rem;
   }
 
-  .checkout-right img {
-    height: 180px;
+  .checkout-right h3 {
+    font-size: 1.1rem;
+  }
+
+  .bottom-total {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
